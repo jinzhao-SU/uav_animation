@@ -21,7 +21,7 @@ class syrMap {
         this.timeInterval = 0;
         this.hideUAVFlag = document.getElementById('uavHideChkBox').checked;;
         this.hideUAVTrackFlag = document.getElementById('uavHideChkBox').checked;;
-        this.updataCurrtimeFlag = false;
+        this.updateCurrtimeFlag = false;
         //store all the flying uav
         this.uavMap = new Map();
         //show area
@@ -85,7 +85,7 @@ class syrMap {
 
 
     fly() {
-        if (this.updataCurrtimeFlag) {
+        if (this.updateCurrtimeFlag) {
             this.updateCurrtime();
         }
 
@@ -223,7 +223,7 @@ class syrMap {
         this.hideUAVTrackFlag = document.getElementById('uavHideChkBox').checked;
     }
     getCurrTime(currtime) {
-        this.updataCurrtimeFlag = true;
+        this.updateCurrtimeFlag = true;
         this.updatedCurrTime = Number(document.getElementById('setCurtime').value);
     }
 
