@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>test Map</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+    <style>
+        /* Always set the map height explicitly to define the size of the div
+         * element that contains the map. */
+        #syrmap {
+            height: 100%;
+        }
+        /* Optional: Makes the sample page fill the window. */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        #buttonStart {
+            background-color: #85DD7C;
+            border: 1px solid #158D34;
+            -moz-box-shadow: inset 0px 0px 1px rgba(26,154,72,1);
+            -webkit-box-shadow: inset 0px 0px 1px rgba(26,154,72,1);
+            box-shadow: inset 0px 0px 1px rgba(26,154,72,1);
+            background-image: -o-linear-gradient(90deg , rgb(112,201,101) 0%, rgb(182,237,176) 100%);
+            background-image: -moz-linear-gradient(90deg , rgb(112,201,101) 0%, rgb(182,237,176) 100%);
+            background-image: -webkit-linear-gradient(90deg , rgb(112,201,101) 0%, rgb(182,237,176) 100%);
+            background-image: -ms-linear-gradient(90deg , rgb(112,201,101) 0%, rgb(182,237,176) 100%);
+            background-image: linear-gradient(90deg , rgb(112,201,101) 0%, rgb(182,237,176) 100%);
+            color: #1d7819;
+            text-shadow: rgba(254,252,252,0.5) 0px 1px 0px;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            width: 120px;
+
+        }
+        #buttonPause{
+            background-color: #D85257;
+            border: 1px solid #951119;
+            -moz-box-shadow: inset 0px 0px 1px rgba(167,32,35,1);
+            -webkit-box-shadow: inset 0px 0px 1px rgba(167,32,35,1);
+            box-shadow: inset 0px 0px 1px rgba(167,32,35,1);
+            background-image: -o-linear-gradient(90deg , rgb(208,69,72) 0%, rgb(243,146,147) 100%);
+            background-image: -moz-linear-gradient(90deg , rgb(208,69,72) 0%, rgb(243,146,147) 100%);
+            background-image: -webkit-linear-gradient(90deg , rgb(208,69,72) 0%, rgb(243,146,147) 100%);
+            background-image: -ms-linear-gradient(90deg , rgb(208,69,72) 0%, rgb(243,146,147) 100%);
+            background-image: linear-gradient(90deg , rgb(208,69,72) 0%, rgb(243,146,147) 100%);
+            color: #A7000F;
+            text-shadow: rgba(254,252,252,0.5) 0px 1px 0px;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            width: 120px;
+        }
+        #buttonResume{
+            background-color: #F39C45;
+            border: 1px solid #A87017;
+            -moz-box-shadow: inset 0px 0px 1px rgba(184,129,39,1);
+            -webkit-box-shadow: inset 0px 0px 1px rgba(184,129,39,1);
+            box-shadow: inset 0px 0px 1px rgba(184,129,39,1);
+            background-image: -o-linear-gradient(90deg , rgb(250,153,60) 0%, rgb(244,197,140) 100%);
+            background-image: -moz-linear-gradient(90deg , rgb(250,153,60) 0%, rgb(244,197,140) 100%);
+            background-image: -webkit-linear-gradient(90deg , rgb(250,153,60) 0%, rgb(244,197,140) 100%);
+            background-image: -ms-linear-gradient(90deg , rgb(250,153,60) 0%, rgb(244,197,140) 100%);
+            background-image: linear-gradient(90deg , rgb(250,153,60) 0%, rgb(244,197,140) 100%);
+            color: #A8580B;
+            text-shadow: rgba(254,252,252,0.5) 0px 1px 0px;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            width: 120px;
+        }
+        .txtbox {
+            background-color: #FFFFFF;
+            border-color: black;
+            border-style: solid;
+            border-width: 2px ;
+            border-radius: 4px;
+            color: black;
+            padding: 14px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            margin: 4px 2px;
+            font-size: 16px;
+            height: 100%;
+        }
+        .label {
+            text-transform: uppercase;
+            display:inline-block;
+            width: 140px;
+            /*height: 100%;*/
+            /*background-color: #4CAF50; !* Green *!*/
+            /*border: none;*/
+            /*color: white;*/
+            /*padding: 14px 32px;*/
+            text-align: center;
+            text-decoration:none;
+            /*display: inline-block;*/
+            /*margin: 4px -6px 4px 4px ;*/
+            font-size: 13px;
+            /**/
+            /*font-size: 37px;*/
+            /*color: #4CAF50;*/
+            /*float: left;*/
+            /*text-align: center;*/
+        }
+
+    </style>
+</head>
+<body>
+<div>
+    <input type="button" value="start" id="buttonStart" onClick="startFly()" disabled>
+    <!--<input type="text" id="txt">-->
+    <input type="button" value="pause" id="buttonPause" onClick="mapGoogle.pause()"disabled>
+    <input type="button" value="resume" id="buttonResume" onClick="mapGoogle.resume()"disabled>
+    <p>
+    <!--<div class="label">Current time:</div>-->
+        <label for='curtime' class="label">Current time:</label>
+        <input type="text" class="txtbox " id="curtime">
+    </p>
+    <p>
+        <!--<div class="label">Current time:</div>-->
+        <label for='curUAVnum' class="label">Current UAV num:</label>
+        <input type="text" class="txtbox " id="curUAVnum">
+    </p>
+
+    <p>
+        <label for='setCurtime' class="label">Set current time:</label>
+        <input type="text" class="txtbox" id="setCurtime" onchange="mapGoogle.getCurrTime(this.value)">
+
+    </p>
+
+    <p>
+        <label for='timeinterval' class="label">Animation speed interval:</label>
+        <input type="text" class="txtbox" id="timeinterval" onchange="mapGoogle.setTimeInterval()" >
+
+    </p>
+
+</div>
+<div>
+    <label class="container">Show UAV track
+        <input id="uavTrackChkBox" type="checkbox"  onchange="mapGoogle.setShowTrack()" checked>
+        <span class="checkmark"></span>
+    </label>
+    <label class="container">Show UAV ID
+        <input id="uavIDChkBox" type="checkbox" onchange = "mapGoogle.setShowUAVID()">
+        <span class="checkmark"></span>
+    </label>
+    <label class="container">Hide UAV icon and track after landing
+        <input id="uavHideChkBox" type="checkbox" onchange = "mapGoogle.setHideUAVTrack()" checked>
+        <span class="checkmark"></span>
+    </label>
+
+
+</div>
+<div id="syrmap"></div>
+<!--<script src="chai.js" type="text/javascript"></script>-->
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<script>
+    $('#buttonStart').click(function() {
+        $(this).prop('disabled',true);
+        $(this).prop('value',"thanks");
+
+        $('#buttonPause').attr('disabled', false);
+    });
+    $('#buttonPause').click(function() {
+        $(this).prop('disabled',true);
+        $('#buttonResume').attr('disabled',false);
+    });
+    $('#buttonResume').click(function() {
+        $(this).prop('disabled',true);
+        $('#buttonPause').attr('disabled',false);
+    });
+</script>
+
+<script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAp4rRcadgcMU4H6FiCrpVNCeM5tHD5yzc"></script>
+
+<!--<script type="text/javascript" src="javascripts/UAV.js">-->
+<!--</script>-->
+<!--&lt;!&ndash;<script type="text/javascript" src="js/basestation.js">&ndash;&gt;-->
+<!--&lt;!&ndash;</script>&ndash;&gt;-->
+<script type="text/javascript" src="javascripts/syrMap.js"></script>
+<script type="text/javascript" src="javascripts/bundle.js"></script>
+<script type="text/javascript" src="javascripts/init.js"></script>
+<script type="text/javascript" src="javascripts/UAV.js"></script>
+
+<!--<script type="text/javascript" src="javascripts/main.js"></script>-->
+<!--<script>-->
+
+       <!---->
+<!--</script>-->
+
+
+
+</body>
+
+</html>
