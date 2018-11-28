@@ -14,7 +14,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-
 //home page
 app.get('/',function (req,res) {
     res.sendFile('main.html',{root:path.join(__dirname,'public')});
@@ -23,10 +22,6 @@ app.get('/',function (req,res) {
 app.get('/uav',require('./routes/uav.js'));
 app.get('/startArea',require('./routes/startArea'));
 app.get('/endArea',require('./routes/endArea'));
-
-
-
-
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
