@@ -102,54 +102,33 @@
             text-transform: uppercase;
             display:inline-block;
             width: 140px;
-            /*height: 100%;*/
-            /*background-color: #4CAF50; !* Green *!*/
-            /*border: none;*/
-            /*color: white;*/
-            /*padding: 14px 32px;*/
             text-align: center;
-            text-decoration:none;
-            /*display: inline-block;*/
-            /*margin: 4px -6px 4px 4px ;*/
-            font-size: 13px;
-            /**/
-            /*font-size: 37px;*/
-            /*color: #4CAF50;*/
-            /*float: left;*/
-            /*text-align: center;*/
+            text-decoration:none;          
+            font-size: 13px;            
         }
-
     </style>
 </head>
 <body>
 <div>
-    <input type="button" value="start" id="buttonStart" onClick="startFly()" disabled>
-    <!--<input type="text" id="txt">-->
+    <input type="button" value="start" id="buttonStart" onClick="startFly()" disabled>    
     <input type="button" value="pause" id="buttonPause" onClick="mapGoogle.pause()"disabled>
     <input type="button" value="resume" id="buttonResume" onClick="mapGoogle.resume()"disabled>
-    <p>
-    <!--<div class="label">Current time:</div>-->
+    <p>  
         <label for='curtime' class="label">Current time:</label>
         <input type="text" class="txtbox " id="curtime">
     </p>
-    <p>
-        <!--<div class="label">Current time:</div>-->
+    <p>        
         <label for='curUAVnum' class="label">Current UAV num:</label>
         <input type="text" class="txtbox " id="curUAVnum">
     </p>
-
     <p>
         <label for='setCurtime' class="label">Set current time:</label>
         <input type="text" class="txtbox" id="setCurtime" onchange="mapGoogle.getCurrTime(this.value)">
-
     </p>
-
     <p>
         <label for='timeinterval' class="label">Animation speed interval:</label>
         <input type="text" class="txtbox" id="timeinterval" onchange="mapGoogle.setTimeInterval()" >
-
     </p>
-
 </div>
 <div>
     <label class="container">Show UAV track
@@ -164,11 +143,8 @@
         <input id="uavHideChkBox" type="checkbox" onchange = "mapGoogle.setHideUAVTrack()" checked>
         <span class="checkmark"></span>
     </label>
-
-
 </div>
 <div id="syrmap"></div>
-<!--<script src="chai.js" type="text/javascript"></script>-->
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
@@ -191,24 +167,10 @@
 
 <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAp4rRcadgcMU4H6FiCrpVNCeM5tHD5yzc"></script>
-
-<!--<script type="text/javascript" src="javascripts/UAV.js">-->
-<!--</script>-->
-<!--&lt;!&ndash;<script type="text/javascript" src="js/basestation.js">&ndash;&gt;-->
-<!--&lt;!&ndash;</script>&ndash;&gt;-->
 <script type="text/javascript" src="javascripts/syrMap.js"></script>
 <script type="text/javascript" src="javascripts/bundle.js"></script>
 <script type="text/javascript" src="javascripts/init.js"></script>
 <script type="text/javascript" src="javascripts/UAV.js"></script>
-
-<!--<script type="text/javascript" src="javascripts/main.js"></script>-->
-<!--<script>-->
-
-       <!---->
-<!--</script>-->
-
-
-
 </body>
 
 </html>
