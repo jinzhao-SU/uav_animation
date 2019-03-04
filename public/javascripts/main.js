@@ -11,11 +11,11 @@ $.ajaxSetup({
     dataType: "json"
 });
 
-$.get("http://localhost:3000/startarea").done(function (data) {
+$.get("http://ec2-18-225-33-58.us-east-2.compute.amazonaws.com/startarea").done(function (data) {
     window.startArea=data;
 });
 
-$.get("http://localhost:3000/endarea").done(function (data) {
+$.get("http://ec2-18-225-33-58.us-east-2.compute.amazonaws.com/endarea").done(function (data) {
     window.endArea=data;
 });
 
@@ -25,7 +25,7 @@ jQuery.ajax({
 console.log("starting async");
 
 
-oboe('http://localhost:3000/uav')
+oboe('http://ec2-18-225-33-58.us-east-2.compute.amazonaws.com/uav')
     .node('{TimeStep ID Latitude Longitude SignalStrength CurrentBasestation finished}', async function (jsonObject) {
         window.uavData.push(jsonObject);
     });
