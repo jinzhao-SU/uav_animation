@@ -11,11 +11,11 @@ $.ajaxSetup({
     dataType: "json"
 });
 
-$.get("http://ec2-34-226-1-12.compute-1.amazonaws.com/startarea").done(function (data) {
+$.get("https://utm-nyscorridor.laanc-usa.com/simul/startarea").done(function (data) {
     window.startArea=data;
 });
 
-$.get("http://ec2-34-226-1-12.compute-1.amazonaws.com/endarea").done(function (data) {
+$.get("https://utm-nyscorridor.laanc-usa.com/simul/endarea").done(function (data) {
     window.endArea=data;
 });
 
@@ -25,7 +25,7 @@ jQuery.ajax({
 console.log("starting async");
 
 
-oboe('http://ec2-34-226-1-12.compute-1.amazonaws.com/uav')
+oboe('https://utm-nyscorridor.laanc-usa.com/simul/uav')
     .node('{TimeStep ID Latitude Longitude SignalStrength CurrentBasestation finished}', async function (jsonObject) {
         window.uavData.push(jsonObject);
     });
