@@ -12,16 +12,16 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use('/simul', express.static(path.resolve(__dirname, 'public')));
 
 //home page
-app.get('/',function (req,res) {
+app.get('/simul',function (req,res) {
     res.sendFile('main.html',{root:path.join(__dirname,'public')});
 });
 //data
-app.get('/uav',require('./routes/uav.js'));
-app.get('/startArea',require('./routes/startArea'));
-app.get('/endArea',require('./routes/endArea'));
+app.use('/simul/uav',require('./routes/uav'));
+app.use('/simul/startArea',require('./routes/startArea'));
+app.use('/simul/endArea',require('./routes/endArea'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -2720,11 +2720,11 @@ $.ajaxSetup({
     dataType: "json"
 });
 
-$.get("https://10.2.1.245:3000/startarea").done(function (data) {
+$.get("https://utm-nyscorridor.laanc-usa.com/simul/startarea").done(function (data) {
     window.startArea=data;
 });
 
-$.get("https://10.2.1.245:3000/endarea").done(function (data) {
+$.get("https://utm-nyscorridor.laanc-usa.com/simul/endarea").done(function (data) {
     window.endArea=data;
 });
 
@@ -2734,7 +2734,7 @@ jQuery.ajax({
 console.log("starting async");
 
 
-oboe('https://10.2.1.245:3000/uav')
+oboe("https://utm-nyscorridor.laanc-usa.com/simul/uav")
     .node('{TimeStep ID Latitude Longitude SignalStrength CurrentBasestation finished}', async function (jsonObject) {
         window.uavData.push(jsonObject);
     });
