@@ -106,9 +106,28 @@
             text-decoration:none;          
             font-size: 13px;            
         }
+
+        #sidepanel {
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            height: 250px;
+            top: 0;
+            left: 0;
+            background-color: #111;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+        }
     </style>
 </head>
 <body>
+<div id="sidepanel">
+    <p>test</p>
+</div>
+<button onclick="openNav()">extend</button>
+<button onclick="closeNav()">close</button>
+
 <div>
     <input type="button" value="start" id="buttonStart" onClick="startFly()" disabled>    
     <input type="button" value="pause" id="buttonPause" onClick="mapGoogle.pause()"disabled>
@@ -159,10 +178,13 @@
         $(this).prop('disabled',true);
         $('#buttonResume').attr('disabled',false);
     });
-    $('#buttonResume').click(function() {
-        $(this).prop('disabled',true);
-        $('#buttonPause').attr('disabled',false);
-    });
+
+    function openNav() {
+        $("#sidepanel").css({width: "250px"})
+    }
+    function closeNav() {
+        $("#sidepanel").style.width = "0"
+    }
 </script>
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAp4rRcadgcMU4H6FiCrpVNCeM5tHD5yzc"></script>
