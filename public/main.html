@@ -103,8 +103,8 @@
             display:inline-block;
             width: 140px;
             text-align: center;
-            text-decoration:none;          
-            font-size: 13px;            
+            text-decoration:none;
+            font-size: 13px;
         }
 
         #sidepanel {
@@ -116,10 +116,20 @@
             left: 0;
             background-color: #f0f0f0;
             overflow-x: hidden;
-            transition: 0.1s;
+            transition: 0.5s;
             padding-top: 60px;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
         }
+
+        #sideButton {
+            position: fixed;
+            z-index: 1;
+            left: 0px;
+            top: 30px;
+            transition: 0.5s;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+        }
+
     </style>
 </head>
 <body>
@@ -144,8 +154,10 @@
         <input type="text" class="txtbox" id="timeinterval" onchange="mapGoogle.setTimeInterval()" >
     </p>
 </div>
-<button onclick="openNav()">extend</button>
-<button onclick="closeNav()">close</button>
+<div id="sideButton">
+    <button onclick="openNav()">extend</button>
+    <button onclick="closeNav()">close</button>
+</div>
 
 <!--<div>-->
 <!--    <input type="button" value="start" id="buttonStart" onClick="startFly()" disabled>    -->
@@ -200,9 +212,11 @@
 
     function openNav() {
         $("#sidepanel").css({width: "250px"})
+        $("#sideButton").css({left: "250px"})
     }
     function closeNav() {
         $("#sidepanel").css({width: "0"})
+        $("#sideButton").css({left: "0"})
     }
 </script>
 
