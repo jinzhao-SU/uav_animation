@@ -111,10 +111,10 @@
             width: 0;
             position: fixed;
             z-index: 1;
-            height: 250px;
+            height: 100%;
             top: 0;
             left: 0;
-            background-color: #111;
+            background-color: #f0f0f0;
             overflow-x: hidden;
             transition: 0.5s;
             padding-top: 60px;
@@ -122,21 +122,15 @@
     </style>
 </head>
 <body>
-<div id="sidepanel">
-    <p>test</p>
-</div>
-<button onclick="openNav()">extend</button>
-<button onclick="closeNav()">close</button>
-
-<div>
-    <input type="button" value="start" id="buttonStart" onClick="startFly()" disabled>    
+<div id="sidepanel" class="sidepanel">
+    <input type="button" value="start" id="buttonStart" onClick="startFly()" disabled>
     <input type="button" value="pause" id="buttonPause" onClick="mapGoogle.pause()"disabled>
     <input type="button" value="resume" id="buttonResume" onClick="mapGoogle.resume()"disabled>
-    <p>  
+    <p>
         <label for='curtime' class="label">Current time:</label>
         <input type="text" class="txtbox " id="curtime">
     </p>
-    <p>        
+    <p>
         <label for='curUAVnum' class="label">Current UAV num:</label>
         <input type="text" class="txtbox " id="curUAVnum">
     </p>
@@ -149,6 +143,30 @@
         <input type="text" class="txtbox" id="timeinterval" onchange="mapGoogle.setTimeInterval()" >
     </p>
 </div>
+<button onclick="openNav()">extend</button>
+<button onclick="closeNav()">close</button>
+
+<!--<div>-->
+<!--    <input type="button" value="start" id="buttonStart" onClick="startFly()" disabled>    -->
+<!--    <input type="button" value="pause" id="buttonPause" onClick="mapGoogle.pause()"disabled>-->
+<!--    <input type="button" value="resume" id="buttonResume" onClick="mapGoogle.resume()"disabled>-->
+<!--    <p>  -->
+<!--        <label for='curtime' class="label">Current time:</label>-->
+<!--        <input type="text" class="txtbox " id="curtime">-->
+<!--    </p>-->
+<!--    <p>        -->
+<!--        <label for='curUAVnum' class="label">Current UAV num:</label>-->
+<!--        <input type="text" class="txtbox " id="curUAVnum">-->
+<!--    </p>-->
+<!--    <p>-->
+<!--        <label for='setCurtime' class="label">Set current time:</label>-->
+<!--        <input type="text" class="txtbox" id="setCurtime" onchange="mapGoogle.getCurrTime(this.value)">-->
+<!--    </p>-->
+<!--    <p>-->
+<!--        <label for='timeinterval' class="label">Animation speed interval:</label>-->
+<!--        <input type="text" class="txtbox" id="timeinterval" onchange="mapGoogle.setTimeInterval()" >-->
+<!--    </p>-->
+<!--</div>-->
 <div>
     <label class="container">Show UAV track
         <input id="uavTrackChkBox" type="checkbox"  onchange="mapGoogle.setShowTrack()" checked>
@@ -183,7 +201,7 @@
         $("#sidepanel").css({width: "250px"})
     }
     function closeNav() {
-        $("#sidepanel").style.width = "0"
+        $("#sidepanel").css({width: "0"})
     }
 </script>
 
