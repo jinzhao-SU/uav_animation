@@ -26,7 +26,6 @@
             border-width: 2px ;
             border-radius: 4px;
             color: black;
-            /* padding: 14px 32px; */
             padding: 14px 24px;
             text-align: center;
             text-decoration: none;
@@ -46,12 +45,11 @@
 
         #sidepanel {
             width: 250px;
-            height: 80%;
             position: fixed;
             z-index: 1;
             top: 90px;
             left: 0;
-            background-color: #f0f0f0;
+            background-color: #FFFFFF;
             overflow-x: hidden;
             transition: 0.5s;
             padding-top: 18px;
@@ -60,18 +58,29 @@
         }
 
         #sideButton {
+            width: 23px;
+            height: 48px;
             position: fixed;
             z-index: 1;
             left: 250px;
-            top: 30px;
+            top: 90px;
             transition: 0.5s;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+            border-left: 1px solid #D4D4D4;
+            background: rgba(255,255,255,0.9);
+            border: 0;
+            border-radius: 0;
         }
         .separate-line {
             height: 0;
-            border-top: 1px solid white;
+            border-top: 1px solid #f0f0f0;
             flex: none;
             white-space: normal;
+        }
+
+        .auvOption {
+            padding-top: 20px;
+            padding-bottom: 10px;
         }
 
     </style>
@@ -106,7 +115,7 @@
                 onchange="mapGoogle.setTimeIntervalRange()" oninput="showRangeTimeValue(this.value)">
     </p>
     <div class="separate-line"></div>
-    <div>
+    <div class="auvOption">
         <table>
             <tr>
                 <td>
@@ -144,7 +153,8 @@
         </table>
     </div>
 </div>
-<button id="sideButton" onclick="paneToggle(this)">open</button>
+<!-- <button id="sideButton" onclick="paneToggle(this)">open</button> -->
+<img id="sideButton" src="images/left-chevron.svg" alt="Expand side panel" onclick="paneToggle(this)">
 
 <div id="syrmap"></div>
 
@@ -163,15 +173,16 @@
     });
 
     function paneToggle(button) {
-        if (!button.style.left || button.style.left === '0px') {
+        if (button.style.left === '0px') {
             $("#sidepanel").css({width: "250px"});
             $("#sideButton").css({left: "250px"});
-            button.innerText = 'close';
+            $('#sideButton').attr('src', "images/left-chevron.svg");
         } else {
             $("#sidepanel").css({width: "0px"});
             $("#sideButton").css({left: "0px"});
-            button.innerText = 'open';
+            $('#sideButton').attr('src', "images/right-chevron.svg");
         }
+        // $('#sideButton').attr('src', "images/right-chevron.svg");
     }
 
     function showRangeTimeValue(newVal) {
