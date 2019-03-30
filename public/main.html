@@ -4,6 +4,7 @@
     <title>test Map</title>
     <meta name="viewport" content="initial-scale=1.0">
     <meta charset="utf-8">
+    <link rel="stylesheet" href="stylesheets/switch.css">
     <style>
         /* Always set the map height explicitly to define the size of the div
          * element that contains the map. */
@@ -29,15 +30,16 @@
             background-image: linear-gradient(90deg , rgb(112,201,101) 0%, rgb(182,237,176) 100%);
             color: #1d7819;
             text-shadow: rgba(254,252,252,0.5) 0px 1px 0px;
-            padding: 15px 32px;
+            /* padding: 15px 32px; */
+            padding: 15px 14px;
             text-align: center;
             text-decoration: none;
             display: inline-block;
             font-size: 16px;
-            margin: 4px 2px;
+            margin: 4px 2px 0px 10px;
             cursor: pointer;
-            width: 120px;
-
+            /* width: 120px; */
+            width: 70px;
         }
         #buttonPause{
             background-color: #D85257;
@@ -52,14 +54,16 @@
             background-image: linear-gradient(90deg , rgb(208,69,72) 0%, rgb(243,146,147) 100%);
             color: #A7000F;
             text-shadow: rgba(254,252,252,0.5) 0px 1px 0px;
-            padding: 15px 32px;
+            /* padding: 15px 32px; */
+            padding: 15px 14px;
             text-align: center;
             text-decoration: none;
             display: inline-block;
             font-size: 16px;
             margin: 4px 2px;
             cursor: pointer;
-            width: 120px;
+            /* width: 120px; */
+            width: 70px;
         }
         #buttonResume{
             background-color: #F39C45;
@@ -74,14 +78,16 @@
             background-image: linear-gradient(90deg , rgb(250,153,60) 0%, rgb(244,197,140) 100%);
             color: #A8580B;
             text-shadow: rgba(254,252,252,0.5) 0px 1px 0px;
-            padding: 15px 32px;
+            /* padding: 15px 32px; */
+            padding: 15px 1px;
             text-align: center;
             text-decoration: none;
             display: inline-block;
             font-size: 16px;
             margin: 4px 2px;
             cursor: pointer;
-            width: 120px;
+            /* width: 120px; */
+            width: 70px;
         }
         .txtbox {
             background-color: #FFFFFF;
@@ -90,7 +96,8 @@
             border-width: 2px ;
             border-radius: 4px;
             color: black;
-            padding: 14px 32px;
+            /* padding: 14px 32px; */
+            padding: 14px 24px;
             text-align: center;
             text-decoration: none;
             display: inline-block;
@@ -129,14 +136,16 @@
             transition: 0.5s;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
         }
-
+        
     </style>
 </head>
 <body>
 <div id="sidepanel" class="sidepanel">
-    <input type="button" value="start" id="buttonStart" onClick="startFly()" disabled>
-    <input type="button" value="pause" id="buttonPause" onClick="mapGoogle.pause()"disabled>
-    <input type="button" value="resume" id="buttonResume" onClick="mapGoogle.resume()"disabled>
+    <div>
+        <input type="button" value="start" id="buttonStart" onClick="startFly()" disabled>
+        <input type="button" value="pause" id="buttonPause" onClick="mapGoogle.pause()"disabled>
+        <input type="button" value="resume" id="buttonResume" onClick="mapGoogle.resume()"disabled>
+    </div>
     <p>
         <label for='curtime' class="label">Current time:</label>
         <input type="text" class="txtbox " id="curtime">
@@ -155,47 +164,50 @@
         <input type="range" id="timeintervalrange" name="volume" min="0" max="20" value="0" step="1" style="width: 220px" 
                 onchange="mapGoogle.setTimeIntervalRange()" oninput="showRangeTimeValue(this.value)">
     </p>
-</div>
-<div id="sideButton">
-    <button onclick="openNav()">extend</button>
-    <button onclick="closeNav()">close</button>
-</div>
+    <div>
+        <!-- <label class="container">Show UAV track
+            <input id="uavTrackChkBox" type="checkbox"  onchange="mapGoogle.setShowTrack()" checked>
+            <span class="checkmark"></span>
+        </label>
+        
+        <label class="container">Show UAV ID
+            <input id="uavIDChkBox" type="checkbox" onchange = "mapGoogle.setShowUAVID()">
+            <span class="checkmark"></span>
+        </label>
+        <label class="container">Hide UAV icon and track after landing
+            <input id="uavHideChkBox" type="checkbox" onchange = "mapGoogle.setHideUAVTrack()" checked>
+            <span class="checkmark"></span>
+        </label> -->
 
-<!--<div>-->
-<!--    <input type="button" value="start" id="buttonStart" onClick="startFly()" disabled>    -->
-<!--    <input type="button" value="pause" id="buttonPause" onClick="mapGoogle.pause()"disabled>-->
-<!--    <input type="button" value="resume" id="buttonResume" onClick="mapGoogle.resume()"disabled>-->
-<!--    <p>  -->
-<!--        <label for='curtime' class="label">Current time:</label>-->
-<!--        <input type="text" class="txtbox " id="curtime">-->
-<!--    </p>-->
-<!--    <p>        -->
-<!--        <label for='curUAVnum' class="label">Current UAV num:</label>-->
-<!--        <input type="text" class="txtbox " id="curUAVnum">-->
-<!--    </p>-->
-<!--    <p>-->
-<!--        <label for='setCurtime' class="label">Set current time:</label>-->
-<!--        <input type="text" class="txtbox" id="setCurtime" onchange="mapGoogle.getCurrTime(this.value)">-->
-<!--    </p>-->
-<!--    <p>-->
-<!--        <label for='timeinterval' class="label">Animation speed interval:</label>-->
-<!--        <input type="text" class="txtbox" id="timeinterval" onchange="mapGoogle.setTimeInterval()" >-->
-<!--    </p>-->
-<!--</div>-->
-<div>
-    <label class="container">Show UAV track
-        <input id="uavTrackChkBox" type="checkbox"  onchange="mapGoogle.setShowTrack()" checked>
-        <span class="checkmark"></span>
-    </label>
-    <label class="container">Show UAV ID
-        <input id="uavIDChkBox" type="checkbox" onchange = "mapGoogle.setShowUAVID()">
-        <span class="checkmark"></span>
-    </label>
-    <label class="container">Hide UAV icon and track after landing
-        <input id="uavHideChkBox" type="checkbox" onchange = "mapGoogle.setHideUAVTrack()" checked>
-        <span class="checkmark"></span>
-    </label>
+        <label>Show UAV track</label>
+        <label class="switch">
+            <input id="uavTrackChkBox" type="checkbox"  onchange="mapGoogle.setShowTrack()" checked>
+            <span class="slider"></span>
+        </label>
+    </br>
+        <label>Show UAV ID</label>
+        <label class="switch">
+            <input id="uavIDChkBox" type="checkbox" onchange = "mapGoogle.setShowUAVID()">
+            <span class="slider"></span>
+        </label>
+    </br>
+        <label>Hide UAV icon and track after landing</label>
+        <label class="switch">
+            <input id="uavHideChkBox" type="checkbox" onchange = "mapGoogle.setHideUAVTrack()" checked>
+            <span class="slider"></span>
+        </label>
+        <!-- <label class="switch">
+            <input type="checkbox">
+            <span class="slider"></span>
+        </label>
+        <label class="switch">
+            <input type="checkbox">
+            <span class="slider"></span>
+        </label> -->
+    </div>
 </div>
+<button id="sideButton" onclick="paneToggle(this)">open</button>
+
 <div id="syrmap"></div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -212,13 +224,16 @@
         $('#buttonResume').attr('disabled',false);
     });
 
-    function openNav() {
-        $("#sidepanel").css({width: "300px"})
-        $("#sideButton").css({left: "300px"})
-    }
-    function closeNav() {
-        $("#sidepanel").css({width: "0"})
-        $("#sideButton").css({left: "0"})
+    function paneToggle(button) {
+        if (!button.style.left || button.style.left === '0px') {
+            $("#sidepanel").css({width: "250px"});
+            $("#sideButton").css({left: "250px"});
+            button.innerText = 'close';
+        } else {
+            $("#sidepanel").css({width: "0px"});
+            $("#sideButton").css({left: "0px"});
+            button.innerText = 'open';
+        }
     }
 
     function showRangeTimeValue(newVal) {
