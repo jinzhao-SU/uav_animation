@@ -210,6 +210,10 @@ class syrMap {
         this.timeInterval = document.getElementById('timeinterval').value;
     }
 
+    setTimeIntervalRange() {
+        this.timeInterval = document.getElementById('timeintervalrange').value;
+    }
+
     setShowTrack() {
         this.showTrackFlag = document.getElementById('uavTrackChkBox').checked;
     }

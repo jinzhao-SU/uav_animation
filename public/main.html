@@ -101,7 +101,7 @@
         .label {
             text-transform: uppercase;
             display:inline-block;
-            width: 140px;
+            width: 80%;
             text-align: center;
             text-decoration:none;
             font-size: 13px;
@@ -151,7 +151,9 @@
     </p>
     <p>
         <label for='timeinterval' class="label">Animation speed interval:</label>
-        <input type="text" class="txtbox" id="timeinterval" onchange="mapGoogle.setTimeInterval()" >
+        <input type="text" class="txtbox" id="timeinterval" onchange="mapGoogle.setTimeInterval()" placeholder="0">
+        <input type="range" id="timeintervalrange" name="volume" min="0" max="20" value="0" step="1" style="width: 220px" 
+                onchange="mapGoogle.setTimeIntervalRange()" oninput="showRangeTimeValue(this.value)">
     </p>
 </div>
 <div id="sideButton">
@@ -211,12 +213,16 @@
     });
 
     function openNav() {
-        $("#sidepanel").css({width: "250px"})
-        $("#sideButton").css({left: "250px"})
+        $("#sidepanel").css({width: "300px"})
+        $("#sideButton").css({left: "300px"})
     }
     function closeNav() {
         $("#sidepanel").css({width: "0"})
         $("#sideButton").css({left: "0"})
+    }
+
+    function showRangeTimeValue(newVal) {
+        $('#timeinterval').attr('placeholder', newVal)
     }
 </script>
 
