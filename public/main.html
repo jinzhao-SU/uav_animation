@@ -115,28 +115,30 @@
         }
 
         #sidepanel {
-            width: 0;
+            width: 250px;
             position: fixed;
             z-index: 1;
-            height: 100%;
-            top: 0;
+            /* height: 100%; */
+            top: 55px;
             left: 0;
             background-color: #f0f0f0;
             overflow-x: hidden;
             transition: 0.5s;
             padding-top: 60px;
+            padding-bottom: 18px;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
         }
 
         #sideButton {
             position: fixed;
             z-index: 1;
-            left: 0px;
+            left: 250px;
             top: 30px;
             transition: 0.5s;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
         }
-        
+
+
     </style>
 </head>
 <body>
@@ -164,46 +166,43 @@
         <input type="range" id="timeintervalrange" name="volume" min="0" max="20" value="0" step="1" style="width: 220px" 
                 onchange="mapGoogle.setTimeIntervalRange()" oninput="showRangeTimeValue(this.value)">
     </p>
-    <div>
-        <!-- <label class="container">Show UAV track
-            <input id="uavTrackChkBox" type="checkbox"  onchange="mapGoogle.setShowTrack()" checked>
-            <span class="checkmark"></span>
-        </label>
-        
-        <label class="container">Show UAV ID
-            <input id="uavIDChkBox" type="checkbox" onchange = "mapGoogle.setShowUAVID()">
-            <span class="checkmark"></span>
-        </label>
-        <label class="container">Hide UAV icon and track after landing
-            <input id="uavHideChkBox" type="checkbox" onchange = "mapGoogle.setHideUAVTrack()" checked>
-            <span class="checkmark"></span>
-        </label> -->
 
-        <label>Show UAV track</label>
-        <label class="switch">
-            <input id="uavTrackChkBox" type="checkbox"  onchange="mapGoogle.setShowTrack()" checked>
-            <span class="slider"></span>
-        </label>
-    </br>
-        <label>Show UAV ID</label>
-        <label class="switch">
-            <input id="uavIDChkBox" type="checkbox" onchange = "mapGoogle.setShowUAVID()">
-            <span class="slider"></span>
-        </label>
-    </br>
-        <label>Hide UAV icon and track after landing</label>
-        <label class="switch">
-            <input id="uavHideChkBox" type="checkbox" onchange = "mapGoogle.setHideUAVTrack()" checked>
-            <span class="slider"></span>
-        </label>
-        <!-- <label class="switch">
-            <input type="checkbox">
-            <span class="slider"></span>
-        </label>
-        <label class="switch">
-            <input type="checkbox">
-            <span class="slider"></span>
-        </label> -->
+    <div>
+        <table>
+            <tr>
+                <td>
+                    <label>Show UAV track</label>
+                </td>
+                <td>
+                    <label class="switch">
+                        <input id="uavTrackChkBox" type="checkbox"  onchange="mapGoogle.setShowTrack()" checked>
+                        <span class="slider"></span>
+                    </label>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Show UAV ID</label>
+                </td>
+                <td>
+                    <label class="switch">
+                        <input id="uavIDChkBox" type="checkbox" onchange = "mapGoogle.setShowUAVID()">
+                        <span class="slider"></span>
+                    </label>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Hide UAV icon and track after landing</label>
+                </td>
+                <td>
+                    <label class="switch">
+                        <input id="uavHideChkBox" type="checkbox" onchange = "mapGoogle.setHideUAVTrack()" checked>
+                        <span class="slider"></span>
+                    </label>
+                </td>
+            </tr>
+        </table>
     </div>
 </div>
 <button id="sideButton" onclick="paneToggle(this)">open</button>
