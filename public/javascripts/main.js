@@ -29,7 +29,3 @@ oboe("https://utm-nyscorridor.laanc-usa.com/simul/uav")
     .node('{TimeStep ID Latitude Longitude SignalStrength CurrentBasestation finished}', async function (jsonObject) {
         window.uavData.push(jsonObject);
     });
-
-
-
-
