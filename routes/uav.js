@@ -4,7 +4,7 @@ var csv=require('csvtojson')
 const fs   = require('fs');
 
 /* GET home page. */
-router.get('/uav',async function(req, res) {
+router.get('/',async function(req, res) {
     // const jsonArray= await csv().fromFile("./localdata/uav_coordinate.csv");
     // res.send(jsonArray);
     const readStream=fs.createReadStream("./localdata/uav_coordinate_light.csv");

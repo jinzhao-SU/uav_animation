@@ -119,7 +119,7 @@ class syrMap {
                         labelid = this.uavData[currIndex].ID;
                         image = {path: google.maps.SymbolPath.CIRCLE, scale: 0};
                     } else {
-                        image = '/images/uav.png';
+                        image = '/simul/images/uav.png';
                         labelid = null;
                     }
                     // make marker
