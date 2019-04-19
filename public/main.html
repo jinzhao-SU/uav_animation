@@ -161,15 +161,18 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 <script>
-    $('#buttonStart').click(function() {
+   $('#buttonStart').click(function() {
         $(this).prop('disabled',true);
         $(this).prop('value',"thanks");
-
         $('#buttonPause').attr('disabled', false);
     });
     $('#buttonPause').click(function() {
         $(this).prop('disabled',true);
         $('#buttonResume').attr('disabled',false);
+    });
+    $('#buttonResume').click(function() {
+        $(this).prop('disabled',true);
+        $('#buttonPause').attr('disabled',false);
     });
 
     function paneToggle(button) {
