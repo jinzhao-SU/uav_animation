@@ -1,4 +1,5 @@
 import axios from 'axios';
+import oboe from 'oboe'
 
 const urlStartArea = 'uav/startArea/'
 const urlEndArea = 'uav/endArea/'
@@ -13,7 +14,6 @@ class dataReceiver {
                 resolve(
                     data.map(post => ({
                         ...post,
-                        createdAt: new Date(post.createdAt)
                     }))
                 )
             } catch(err) {
@@ -21,15 +21,16 @@ class dataReceiver {
             }
         })
     }
+
     static getEndData() {
         return new Promise(async (resolve, reject) => {
             try {
                 const res = await axios.get(urlEndArea);
+                
                 const data = res.data;
                 resolve(
                     data.map(post => ({
                         ...post,
-                        createdAt: new Date(post.createdAt)
                     }))
                 )
             } catch(err) {
@@ -37,15 +38,22 @@ class dataReceiver {
             }
         })
     }
+
     static getUAVData() {
         return new Promise(async (resolve, reject) => {
             try {
-                const res = await axios.get(urlUAV);
-                const data = res.data;
+                const data = [];
+                oboe(urlUAV).node(
+                    '{TimeStep ID Latitude Longitude SignalStrength CurrentBasestation finished}',
+                    async function (jsonObject) {
+                    //    console.log(jsonObject);
+                        data.push(jsonObject);
+                    }
+                );
+                
                 resolve(
                     data.map(post => ({
                         ...post,
-                        createdAt: new Date(post.createdAt)
                     }))
                 )
             } catch(err) {

@@ -26,10 +26,10 @@ export default {
         try {
             this.startData = await dataReceiver.getStartData();
             this.endData = await dataReceiver.getEndData();
-            // this.uavData = await dataReceiver.getUAVData();
+            this.uavData = await dataReceiver.getUAVData();
             // console.log(this.uavData)
-            console.log(this.startData)
-            console.log(this.endData)
+            // console.log(this.startData)
+            // console.log(this.endData)
             let mapGoogle = new syrMap('map',[],this.startData,this.endData);
         } catch(err) {
             this.error = err.message;
