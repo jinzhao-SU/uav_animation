@@ -1,3 +1,6 @@
+import UAV from './UAV'
+import UAVImage from '../assets/uav.png'
+
 class syrMap {
 
     constructor(mapID, uavdata, startArea, endArea) {
@@ -67,7 +70,7 @@ class syrMap {
             });
         }
     }
-/*
+
     checkTimeSeg() {
         let currTimeStep = this.uavData[0].TimeStep;
         let tempIndex = 0;
@@ -99,8 +102,8 @@ class syrMap {
             let currID = 0;
             let currUAV;
 
-            document.getElementById('curtime').value= this.uavData[currIndex].TimeStep;
-            document.getElementById('curUAVnum').value = this.uavMap.size;
+            // document.getElementById('curtime').value= this.uavData[currIndex].TimeStep;
+            // document.getElementById('curUAVnum').value = this.uavMap.size;
             while (currIndex < endIndex) {
                 currID = this.uavData[currIndex].ID;
                 //console.log("curr Index ", currIndex);
@@ -115,7 +118,7 @@ class syrMap {
                         labelid = this.uavData[currIndex].ID;
                         image = {path: google.maps.SymbolPath.CIRCLE, scale: 0};
                     } else {
-                        image = '/images/uav.png';
+                        image = UAVImage;
                         labelid = null;
                     }
                     // make marker
@@ -191,7 +194,7 @@ class syrMap {
              }, this.timeInterval);
         this.timeoutArr.push(intervalId);
     }
-
+/*
     pause() {
         for (let item in this.timeoutArr) {
             clearTimeout(this.timeoutArr[item]);

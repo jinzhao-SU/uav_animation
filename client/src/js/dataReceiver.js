@@ -6,7 +6,11 @@ const urlEndArea = 'uav/endArea/'
 const urlUAV = 'uav/uav/'
 
 class dataReceiver {
-    static getStartData() {
+    constructor () {
+        this.uavData = [];
+    }
+
+    getStartData() {
         return new Promise(async (resolve, reject) => {
             try {
                 const res = await axios.get(urlStartArea);
@@ -22,7 +26,7 @@ class dataReceiver {
         })
     }
 
-    static getEndData() {
+    getEndData() {
         return new Promise(async (resolve, reject) => {
             try {
                 const res = await axios.get(urlEndArea);
@@ -39,28 +43,48 @@ class dataReceiver {
         })
     }
 
-    static getUAVData() {
+    getUAVData() {
         return new Promise(async (resolve, reject) => {
             try {
-                const data = [];
+                var _this = this;
                 oboe(urlUAV).node(
                     '{TimeStep ID Latitude Longitude SignalStrength CurrentBasestation finished}',
                     async function (jsonObject) {
                     //    console.log(jsonObject);
-                        data.push(jsonObject);
+                        _this.uavData.push(jsonObject);
                     }
                 );
-                
-                resolve(
-                    data.map(post => ({
-                        ...post,
-                    }))
-                )
+                const flag = await _this.checkUAVData();
+                if (flag) {
+                    resolve(
+                        _this.uavData.map(post => ({
+                            ...post,
+                        }))
+                    )
+                }
             } catch(err) {
                 reject(err);
             }
         })
     }
+
+    checkUAVData() {
+        return new Promise(async (resolve, reject) => {
+            try {
+                var _this = this;
+                
+                let x = setInterval(() => {
+                    if(_this.uavData.length >= 100) {
+                        clearInterval(x);
+                        resolve(true);
+                    }
+                }, 0);
+            } catch (err) {
+                reject(err);
+            }
+        })
+    }
+
 }
 
 
