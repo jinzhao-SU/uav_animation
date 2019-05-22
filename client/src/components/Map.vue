@@ -9,7 +9,12 @@ export default {
     name: 'GoogleMap',
     data() {
         return {
+<<<<<<< HEAD
             message: 'Here is Map.vue12',
+=======
+            message: 'Here is Map.vue',
+            d: this.getData()
+>>>>>>> 2e7540746e11e88e21041e2c39c713088c07da6d
         };
     },
     async created () {
@@ -17,6 +22,7 @@ export default {
             let dr = new dataReceiver();
             this.startData = await dr.getStartData();
             this.endData = await dr.getEndData();
+<<<<<<< HEAD
             this.uavData = await dr.getUAVData();
             // console.log(this.uavData)
             // console.log(this.startData)
@@ -27,10 +33,29 @@ export default {
 
             let mapGoogle = new syrMap('map',this.uavData,this.startData,this.endData);
             mapGoogle.fly();
+=======
+            // this.uavData = await dr.getUAVData();
+            // console.log(this.uavData)
+            // console.log(this.startData)
+            // console.log(this.endData)
+            let mapGoogle = new syrMap('map',this.uavData,this.startData,this.endData);
+>>>>>>> 2e7540746e11e88e21041e2c39c713088c07da6d
         } catch(err) {
             this.error = err.message;
         }
     },
+<<<<<<< HEAD
+=======
+    methods: {
+        async getData() {
+            let dr = new dataReceiver();
+            this.uavData = await dr.getUAVData();
+            console.log(this.uavData);
+            return this.uavData;
+        }
+    },
+    
+>>>>>>> 2e7540746e11e88e21041e2c39c713088c07da6d
 };
 </script>
 
