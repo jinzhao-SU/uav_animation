@@ -19,11 +19,11 @@ class syrMap {
         //updated time for query
         this.updatedCurrTime = 0;
         //flags
-        // this.showTrackFlag = document.getElementById('uavTrackChkBox').checked;
-        // this.showUAVIDFlag = document.getElementById('uavIDChkBox').checked;
+        this.showTrackFlag = document.getElementById('uavTrackChkBox').checked;
+        this.showUAVIDFlag = document.getElementById('uavIDChkBox').checked;
         this.timeInterval = 0;
-        // this.hideUAVFlag = document.getElementById('uavHideChkBox').checked;
-        // this.hideUAVTrackFlag = document.getElementById('uavHideChkBox').checked;
+        this.hideUAVFlag = document.getElementById('uavHideChkBox').checked;
+        this.hideUAVTrackFlag = document.getElementById('uavHideChkBox').checked;
         this.updateCurrtimeFlag = false;
         //store all the flying uav
         this.uavMap = new Map();
@@ -204,7 +204,7 @@ class syrMap {
     resume() {
         this.fly();
     }
-/*
+
     setTimeInterval() {
         this.timeInterval = document.getElementById('timeinterval').value;
     }
@@ -258,7 +258,7 @@ class syrMap {
         //move to that timestep
         this.uavData.splice(0, resultIndex);
     }
-*/
+
 }
 
 

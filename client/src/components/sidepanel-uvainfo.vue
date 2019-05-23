@@ -13,8 +13,46 @@
         <div class="separate-line"></div>
         <p>
             <label for='setCurtime' class="label">Set current time:</label>
-            <input type="text" class="txtbox" id="setCurtime" onchange="getCurrTime(this)">
+            <input type="text" class="txtbox" id="setCurtime" v-on:change="getCurrTime()">
         </p>
+        <div class="separate-line"></div>
+        <div class="auvOption">
+        <table>
+            <tr>
+                <td>
+                    <label>Show UAV track</label>
+                </td>
+                <td>
+                    <label class="switch">
+                        <input id="uavTrackChkBox" type="checkbox"  v-on:change="setShowTrack()" checked>
+                        <span class="slider"></span>
+                    </label>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Show UAV ID</label>
+                </td>
+                <td>
+                    <label class="switch">
+                        <input id="uavIDChkBox" type="checkbox" v-on:change="setShowUAVID()">
+                        <span class="slider"></span>
+                    </label>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Hide UAV icon and track after landing</label>
+                </td>
+                <td>
+                    <label class="switch">
+                        <input id="uavHideChkBox" type="checkbox" v-on:change="setHideUAVTrack()" checked>
+                        <span class="slider"></span>
+                    </label>
+                </td>
+            </tr>
+        </table>
+    </div>
     </div>
 </template>
 
@@ -24,10 +62,20 @@
 export default {
     name: 'sidepanel-uvainfo',
     methods: {
-        getCurrTime(time) {
+        getCurrTime() {
             // Event.fire('getCurrTime', time);
-            console.log(time);
-        }
+            let time = document.getElementById('setCurtime').value;
+            Event.fire('getCurrTime', time);
+        },
+        setShowTrack() {
+            Event.fire('setShowTrack');
+        },
+        setShowUAVID() {
+            Event.fire('setShowUAVID');
+        },
+        setHideUAVTrack() {
+            Event.fire('setHideUAVTrack');
+        },
     },
 }
 
@@ -66,6 +114,10 @@ export default {
         border-top: 1px solid #f0f0f0;
         flex: none;
         white-space: normal;
+    }
+    .auvOption {
+        padding-top: 20px;
+        padding-bottom: 10px;
     }
 </style>
 

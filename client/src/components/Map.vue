@@ -38,7 +38,10 @@ export default {
             Event.listen('startFly', ()=> this.mapGoogle.fly());
             Event.listen('pauseFly', ()=> this.mapGoogle.pause());
             Event.listen('resumeFly', ()=> this.mapGoogle.resume());
-            Event.listen('getCurrTime', (time)=> console.log(time));
+            Event.listen('getCurrTime', (time)=> this.mapGoogle.getCurrTime(time));
+            Event.listen('setShowTrack', ()=> this.mapGoogle.setShowTrack());
+            Event.listen('setShowUAVID', ()=> this.mapGoogle.setShowUAVID());
+            Event.listen('setHideUAVTrack', ()=> this.mapGoogle.setHideUAVTrack());
 
         } catch(err) {
             this.error = err.message;
