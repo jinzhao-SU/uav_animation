@@ -51,6 +51,10 @@ export default {
 
             // let mapGoogle = new syrMap('map',this.uavData,this.startData,this.endData);
             // mapGoogle.fly();
+
+
+            Event.listen('startFly', ()=> this.mapGoogle.fly());
+
         } catch(err) {
             this.error = err.message;
         }
@@ -133,28 +137,7 @@ export default {
             })
         },
 
-        fetchEventsList: async function() {
-
-            // this.$http.get('events', function(events) {
-            //     this.list = events;
-            // }).bind(this);
-
-            const urlUAV = 'uav/uav/';
-            var _this = this;
-            oboe(urlUAV).node(
-                '{TimeStep ID Latitude Longitude SignalStrength CurrentBasestation finished}',
-                async function (jsonObject) {
-                //    console.log(jsonObject);
-                    _this.uavData.push(jsonObject);
-                }
-            );
-        },
-        cancelAutoUpdate: function() { clearInterval(this.timer) }
-
     },
-    beforeDestroy() {
-        clearInterval(this.timer)
-    }
 };
 </script>
 

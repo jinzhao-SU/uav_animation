@@ -25,7 +25,16 @@ export default {
         },
         closeMenu() {
             this.$emit('closeMenu');
-        }
+        },
+        startFly() {
+            Event.fire('startFly');
+        },
+        pauseFly() {
+            this.$emit('pauseFly');
+        },
+        resumeFly() {
+            this.$emit('resumeFly');
+        },
     }
 };
 </script>

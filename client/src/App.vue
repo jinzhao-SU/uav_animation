@@ -1,9 +1,9 @@
 <template>
   <div id="app">
     <Map/>
-    <component :is="currentMenu" :right="side === 'right' ? true: false">
+    <component 
+      :is="currentMenu" :right="side === 'right' ? true: false">
     </component>
-    <!-- <PostComponent/> -->
   </div>
 </template>
 
@@ -26,15 +26,15 @@ export default {
     Menu,
     Map,
   },
+  created() {
+    Event.listen('applied', ()=> alert('Handling it!'));
+  },
   methods: {
-    startFly() {
-        console.log('startFlying')    
-    },
     pauseFly() {
-        console.log('pauseFlying')    
+        console.log('pauseFlying')
     },
     resumeFly() {
-        console.log('resumeFlying')    
+        console.log('resumeFlying')
     },
   },
   mounted() {
