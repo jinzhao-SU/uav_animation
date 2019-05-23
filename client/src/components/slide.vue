@@ -17,7 +17,7 @@ import Menu from './Menu';
 export default {
     name: 'slide',
     components: {
-        Menu: Menu
+        Menu: Menu,
     },
     methods: {
         openMenu() {
@@ -25,6 +25,15 @@ export default {
         },
         closeMenu() {
             this.$emit('closeMenu');
+        },
+        startFly() {
+            console.log('start fly');
+        },
+        pauseFly() {
+            console.log('pause fly');
+        },
+        resumeFly() {
+            console.log('resume fly');
         }
     }
 };

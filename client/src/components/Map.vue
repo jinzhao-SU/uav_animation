@@ -12,7 +12,6 @@ const urlStartArea = 'uav/startArea/'
 const urlEndArea = 'uav/endArea/'
 const urlUAV = 'uav/uav/'
 
-
 export default {
     name: 'GoogleMap',
     data() {
@@ -149,7 +148,15 @@ export default {
                 }
             );
         },
-        cancelAutoUpdate: function() { clearInterval(this.timer) }
+        
+        cancelAutoUpdate: function() { 
+            clearInterval(this.timer) 
+        },
+
+        startFly() {
+            this.mapGoogle.fly();
+        }
+        
 
     },
     beforeDestroy() {
