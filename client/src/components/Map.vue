@@ -34,10 +34,11 @@ export default {
             // init map
             this.mapGoogle = new syrMap('map',this.uavData,this.startData,this.endData);
 
-            // event listener of buttons
+            // uav event listener
             Event.listen('startFly', ()=> this.mapGoogle.fly());
             Event.listen('pauseFly', ()=> this.mapGoogle.pause());
             Event.listen('resumeFly', ()=> this.mapGoogle.resume());
+            Event.listen('getCurrTime', (time)=> console.log(time));
 
         } catch(err) {
             this.error = err.message;

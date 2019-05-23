@@ -7,6 +7,7 @@
                     <button v-on:click="pauseFly" class='pauseBtn'>pause</button>
                     <button v-on:click="resumeFly" class='resumeBtn'>resume</button>
                 </div>
+                <uavinfo/>
             </slot>
         </Menu>
     </div>
@@ -14,10 +15,14 @@
 
 <script>
 import Menu from './Menu';
+import uavinfo from './sidepanel-uvainfo'
+
+
 export default {
     name: 'slide',
     components: {
         Menu: Menu,
+        uavinfo: uavinfo,
     },
     methods: {
         openMenu() {

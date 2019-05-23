@@ -102,8 +102,8 @@ class syrMap {
             let currID = 0;
             let currUAV;
 
-            // document.getElementById('curtime').value= this.uavData[currIndex].TimeStep;
-            // document.getElementById('curUAVnum').value = this.uavMap.size;
+            document.getElementById('curtime').value= this.uavData[currIndex].TimeStep;
+            document.getElementById('curUAVnum').value = this.uavMap.size;
             while (currIndex < endIndex) {
                 currID = this.uavData[currIndex].ID;
                 //console.log("curr Index ", currIndex);
