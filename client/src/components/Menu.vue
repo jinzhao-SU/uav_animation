@@ -130,19 +130,6 @@ export default {
                 console.log(e)
                 this.closeMenu();
             }
-
-            // if (
-            //     element &&
-            //     element !== target &&
-            //     !element.contains(target) &&
-            //     e.target.className !== 'bm-menu' &&
-            //     e.target.className !== 'bm-menu' &&
-            //     this.isSideBarOpen &&
-            //     !this.disableOutsideClick
-            // ) {
-            //     this.closeMenu();
-            // }
-
         },
     },
 
@@ -152,11 +139,11 @@ export default {
         }
     },
     created: function() {
-        document.addEventListener('click', this.documentClick);
+        // document.addEventListener('click', this.documentClick);
     },
     destroyed: function() {
         document.removeEventListener('keyup', this.closeMenuOnEsc);
-        document.removeEventListener('click', this.documentClick);
+        // document.removeEventListener('click', this.documentClick);
     },
     watch: {
         isOpen: {

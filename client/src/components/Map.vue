@@ -12,7 +12,6 @@ const urlStartArea = 'uav/startArea/'
 const urlEndArea = 'uav/endArea/'
 const urlUAV = 'uav/uav/'
 
-
 export default {
     name: 'GoogleMap',
     data() {
@@ -28,32 +27,17 @@ export default {
     },
     async created () {
         try {
-            // this.dr = new dataReceiver();
-            // let dr = new dataReceiver();
-            // this.startData = await this.dr.getStartData();
-            // this.endData = await this.dr.getEndData();
-            // this.uavData = await this.dr.getUAVData();
+            // get data
             this.startData = await this.getStartData();
             this.endData = await this.getEndData();
             this.uavData = await this.getUAVData();
+            // init map
             this.mapGoogle = new syrMap('map',this.uavData,this.startData,this.endData);
-            // this.mapGoogle.fly();
 
-            // this.fetchEventsList();
-            // this.timer = setInterval(this.fetchEventsList, 1000);
-
-            // console.log(this.uavData)
-            // console.log(this.startData)
-            // console.log(this.endData)
-
-
-            // this.uavData = [{"TimeStep":"10","ID":"1233186384","Latitude":"43.0827885","Longitude":"-76.1771582","SignalStrength":"134.4682058","CurrentBasestation":"7","finished":"1"}]
-
-            // let mapGoogle = new syrMap('map',this.uavData,this.startData,this.endData);
-            // mapGoogle.fly();
-
-
+            // event listener of buttons
             Event.listen('startFly', ()=> this.mapGoogle.fly());
+            Event.listen('pauseFly', ()=> this.mapGoogle.pause());
+            Event.listen('resumeFly', ()=> this.mapGoogle.resume());
 
         } catch(err) {
             this.error = err.message;

@@ -194,7 +194,7 @@ class syrMap {
              }, this.timeInterval);
         this.timeoutArr.push(intervalId);
     }
-/*
+
     pause() {
         for (let item in this.timeoutArr) {
             clearTimeout(this.timeoutArr[item]);
@@ -204,7 +204,7 @@ class syrMap {
     resume() {
         this.fly();
     }
-
+/*
     setTimeInterval() {
         this.timeInterval = document.getElementById('timeinterval').value;
     }

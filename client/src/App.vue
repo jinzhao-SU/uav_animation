@@ -10,7 +10,7 @@
 <script>
 // import PostComponent from './components/PostComponent.vue';
 import slide from './components/slide';
-import Menu from './components/Menu';
+// import Menu from './components/Menu';
 import Map from "./components/Map.vue"
 
 export default {
@@ -23,19 +23,10 @@ export default {
   },
   components: {
     slide,
-    Menu,
     Map,
   },
-  created() {
-    Event.listen('applied', ()=> alert('Handling it!'));
-  },
   methods: {
-    pauseFly() {
-        console.log('pauseFlying')
-    },
-    resumeFly() {
-        console.log('resumeFlying')
-    },
+    
   },
   mounted() {
     
