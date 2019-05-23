@@ -205,8 +205,9 @@ class syrMap {
         this.fly();
     }
 
-    setTimeInterval() {
-        this.timeInterval = document.getElementById('timeinterval').value;
+    setTimeInterval(val) {
+        // this.timeInterval = document.getElementById('timeinterval').value;
+        this.timeInterval = val;
     }
 
     setTimeIntervalRange() {

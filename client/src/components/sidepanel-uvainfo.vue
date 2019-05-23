@@ -16,6 +16,11 @@
             <input type="text" class="txtbox" id="setCurtime" v-on:change="getCurrTime()">
         </p>
         <div class="separate-line"></div>
+        <p>
+            <label for='timeinterval' class="label">Set current time:</label>
+            <input type="text" class="txtbox" id="timeinterval"  v-on:change="setTimeInterval()" v-model="timeInterval" placeholder="0">
+        </p>
+        <div class="separate-line"></div>
         <div class="auvOption">
         <table>
             <tr>
@@ -61,11 +66,20 @@
 
 export default {
     name: 'sidepanel-uvainfo',
+    data() {
+        return {
+            timeInterval: '',
+        }
+    },
+
     methods: {
         getCurrTime() {
             // Event.fire('getCurrTime', time);
             let time = document.getElementById('setCurtime').value;
             Event.fire('getCurrTime', time);
+        },
+        setTimeInterval() {
+            Event.fire('setTimeInterval', this.timeInterval)
         },
         setShowTrack() {
             Event.fire('setShowTrack');

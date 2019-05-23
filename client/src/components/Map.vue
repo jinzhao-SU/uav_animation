@@ -39,6 +39,7 @@ export default {
             Event.listen('pauseFly', ()=> this.mapGoogle.pause());
             Event.listen('resumeFly', ()=> this.mapGoogle.resume());
             Event.listen('getCurrTime', (time)=> this.mapGoogle.getCurrTime(time));
+            Event.listen('setTimeInterval', (timeInterval)=> this.mapGoogle.setTimeInterval(timeInterval));
             Event.listen('setShowTrack', ()=> this.mapGoogle.setShowTrack());
             Event.listen('setShowUAVID', ()=> this.mapGoogle.setShowUAVID());
             Event.listen('setHideUAVTrack', ()=> this.mapGoogle.setHideUAVTrack());
