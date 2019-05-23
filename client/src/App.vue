@@ -2,11 +2,6 @@
   <div id="app">
     <Map/>
     <component :is="currentMenu" :right="side === 'right' ? true: false">
-      <div class='uavControlBtn'>
-        <button v-on:click="startFly" class='start'>start</button>
-        <button v-on:click="pauseFly" class='pause'>pause</button>
-        <button v-on:click="resumeFly" class='resume'>resume</button>
-      </div>
     </component>
     <!-- <PostComponent/> -->
   </div>
@@ -16,7 +11,6 @@
 // import PostComponent from './components/PostComponent.vue';
 import slide from './components/slide';
 import Menu from './components/Menu';
-// import GoogleMap from "./components/GoogleMap";
 import Map from "./components/Map.vue"
 
 export default {
@@ -28,11 +22,8 @@ export default {
     };
   },
   components: {
-    // PostComponent,
-    // GoogleMap,
     slide,
     Menu,
-    // GoogleMap,
     Map,
   },
   methods: {

@@ -7,8 +7,7 @@ import oboe from 'oboe'
 import axios from 'axios';
 
 import syrMap from '../js/syrMap'
-import dataReceiver from '../js/dataReceiver'
-
+// import dataReceiver from '../js/dataReceiver'
 const urlStartArea = 'uav/startArea/'
 const urlEndArea = 'uav/endArea/'
 const urlUAV = 'uav/uav/'
@@ -38,7 +37,7 @@ export default {
             this.endData = await this.getEndData();
             this.uavData = await this.getUAVData();
             this.mapGoogle = new syrMap('map',this.uavData,this.startData,this.endData);
-            this.mapGoogle.fly();
+            // this.mapGoogle.fly();
 
             // this.fetchEventsList();
             // this.timer = setInterval(this.fetchEventsList, 1000);
@@ -133,9 +132,6 @@ export default {
                 }
             })
         },
-
-
-
 
         fetchEventsList: async function() {
 

@@ -209,7 +209,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="less">
 html {
     height: 100%;
 }
@@ -217,8 +217,8 @@ html {
     position: absolute;
     width: 36px;
     height: 30px;
-    left: 36px;
-    top: 36px;
+    left: 0px;
+    top: 100px;
     cursor: pointer;
 }
 .bm-burger-button.hidden {
@@ -271,27 +271,18 @@ html {
     color: #b8b7ad;
     margin: 5px 15px 5px 15px;
     font-size: 20px;
-}
-.bm-item-list > * {
-    display: flex;
-    text-decoration: none;
-    padding: 0.7em;
-}
-.bm-item-list > * > span {
-    margin-left: 10px;
-    font-weight: 700;
-    color: black;
-}
 
-.uavControlBtn {
-    background-color: white;
-    border-radius: 25px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-}
-.uavControlBtn > button {
-    width: 70px;
-    height: 70px;
-    background-color: aqua;
+    > * {
+        display: flex;
+        text-decoration: none;
+        padding: 0.7em;
+
+        > span {
+            margin-left: 10px;
+            font-weight: 700;
+            color: black;
+        }
+    }
 }
 </style>
 
