@@ -17,9 +17,11 @@
         </p>
         <div class="separate-line"></div>
         <p>
-            <label for='timeinterval' class="label">Set current time:</label>
-            <input type="text" class="txtbox" id="timeinterval"  v-on:change="setTimeInterval()" v-model="timeInterval" placeholder="0">
+            <label for='timeinterval' class="label">Animation speed interval:</label>
+            <!-- <input type="text" class="txtbox" id="timeinterval"  v-on:change="setTimeInterval()" v-model="timeInterval" placeholder="0"> -->
+            <ticks></ticks>
         </p>
+        
         <div class="separate-line"></div>
         <div class="auvOption">
         <table>
@@ -63,9 +65,13 @@
 
 
 <script>
+import ticks from './ticks'
 
 export default {
     name: 'sidepanel-uvainfo',
+    components: {
+        ticks,
+    },
     data() {
         return {
             timeInterval: '',

@@ -238,7 +238,7 @@ html {
 }
 .bm-menu {
     height: 100%; /* 100% Full-height */
-    width: 0; /* 0 width - change this with JavaScript */
+    width: 0; /* 0 width - change this with JavaScript */ //--------------------current
     position: fixed; /* Stay in place */
     z-index: 1000; /* Stay on top */
     top: 0;

@@ -208,6 +208,8 @@ class syrMap {
     setTimeInterval(val) {
         // this.timeInterval = document.getElementById('timeinterval').value;
         this.timeInterval = val;
+        this.pause();
+        this.resume();
     }
 
     setTimeIntervalRange() {
