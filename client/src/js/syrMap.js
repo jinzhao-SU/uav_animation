@@ -30,6 +30,8 @@ class syrMap {
         //show area
         this.showStartArea();
         this.showEndArea();
+        
+        this.pastTimeInterval = [];
     }
 
 
@@ -95,8 +97,8 @@ class syrMap {
                 clearInterval(intervalId);
                 return;
             }
-            //console.log("length ", this.uavData.length);
-            //console.log("first ele", this.uavData[0]);
+            // console.log("length ", this.uavData.length);
+            // console.log("first ele", this.uavData[0]);
             let endIndex = this.checkTimeSeg();
             let currIndex = 0;
             let currID = 0;
@@ -190,12 +192,26 @@ class syrMap {
                 currIndex += 1;
             }
             //move uadData loading window
-            this.uavData.splice(0, endIndex);
-             }, this.timeInterval);
+            this.pastTimeInterval.push(this.uavData.splice(0, endIndex));
+            if (this.pastTimeInterval.length > 10) {
+                this.pastTimeInterval.shift();
+            }
+            // this.uavData.splice(0, endIndex);
+
+        }, this.timeInterval);
         this.timeoutArr.push(intervalId);
     }
 
     pause() {
+        // console.log(this.pastTimeInterval);
+        // console.log(this.uavData[0]);
+
+        var tmp = [];
+        this.pastTimeInterval.reverse().forEach(element => {
+            tmp = element.concat(tmp);  
+        });
+        this.uavData = tmp.concat(this.uavData);
+        
         for (let item in this.timeoutArr) {
             clearTimeout(this.timeoutArr[item]);
         }
