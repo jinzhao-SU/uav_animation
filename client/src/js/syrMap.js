@@ -21,7 +21,7 @@ class syrMap {
         //flags
         this.showTrackFlag = document.getElementById('uavTrackChkBox').checked;
         this.showUAVIDFlag = document.getElementById('uavIDChkBox').checked;
-        this.timeInterval = 0;
+        this.timeInterval = 60;
         this.hideUAVFlag = document.getElementById('uavHideChkBox').checked;
         this.hideUAVTrackFlag = document.getElementById('uavHideChkBox').checked;
         this.updateCurrtimeFlag = false;
@@ -202,19 +202,18 @@ class syrMap {
         this.timeoutArr.push(intervalId);
     }
 
-    pause() {
-        // console.log(this.pastTimeInterval);
-        // console.log(this.uavData[0]);
+    pause() {        
+        for (let item in this.timeoutArr) {
+            clearTimeout(this.timeoutArr[item]);
+        }
+    }
 
+    backtrack() {
         var tmp = [];
         this.pastTimeInterval.reverse().forEach(element => {
             tmp = element.concat(tmp);  
         });
         this.uavData = tmp.concat(this.uavData);
-        
-        for (let item in this.timeoutArr) {
-            clearTimeout(this.timeoutArr[item]);
-        }
     }
 
     resume() {

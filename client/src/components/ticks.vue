@@ -6,7 +6,7 @@
         <v-slider
             v-model="speeds"
             :tick-labels="ticksLabels"
-            :max="5"
+            :max="6"
             step="1"
             ticks="always"
             tick-size="2"
@@ -21,11 +21,12 @@
     name: 'ticks',
     data () {
       return {
-        speeds: 0,
+        speeds: 3,
         ticksLabels: [
           'fast',
           '',
           '',
+          'normal',
           '',
           '',
           'slow',
@@ -33,7 +34,7 @@
       }
     },
     updated() {
-        console.log(this.speeds);
+        // console.log(this.speeds);
         this.setTimeInterval(this.speeds * 20);
     },
     methods: {

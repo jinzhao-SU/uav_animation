@@ -43,6 +43,7 @@ export default {
             Event.listen('setShowTrack', ()=> this.mapGoogle.setShowTrack());
             Event.listen('setShowUAVID', ()=> this.mapGoogle.setShowUAVID());
             Event.listen('setHideUAVTrack', ()=> this.mapGoogle.setHideUAVTrack());
+            Event.listen('backtrack', ()=> this.mapGoogle.backtrack());
 
         } catch(err) {
             this.error = err.message;

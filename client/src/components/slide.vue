@@ -7,6 +7,9 @@
                     <button v-on:click="pauseFly" class='pauseBtn'>pause</button>
                     <button v-on:click="resumeFly" class='resumeBtn'>resume</button>
                 </div>
+                <div class='uavControlBtn'>
+                    <button v-on:click="backtrack" class='backtrackBtn'>back</button>
+                </div>
                 <uavinfo/>
             </slot>
         </Menu>
@@ -40,6 +43,9 @@ export default {
         resumeFly() {
             Event.fire('resumeFly');
         },
+        backtrack() {
+            Event.fire('backtrack');
+        },
     }
 };
 </script>
@@ -64,6 +70,9 @@ export default {
     }
     .resumeBtn {
         background-color: yellow;
+    }
+    .backtrackBtn{
+        background-color: greenyellow;
     }
 }
 
