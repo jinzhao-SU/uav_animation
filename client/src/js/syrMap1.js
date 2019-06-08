@@ -151,7 +151,6 @@ class syrMap {
                             for (let item in currUAV.prePath) {
                                 currUAV.prePath[item].setMap(null);
                             }
-                            currUAV.uavPath.setMap(null);
                         }
                         //delete element in map
                         this.uavMap.delete(currID);
@@ -162,41 +161,28 @@ class syrMap {
                             let lineSymbol = {
                                 path: google.maps.SymbolPath.FORWARD_OPEN_ARROW
                             };
-                            if (!Object.getOwnPropertyNames(currUAV.uavPath).length > 0) {
-                                // uavPath is null
-                                currUAV.uavPath = new google.maps.Polyline({
-                                    path: [
-                                        {
-                                            lat: currUAV.lat,   
-                                            lng: currUAV.long
-                                        },
-                                        {
-                                            lat: Number(this.uavData[currIndex].Latitude),
-                                            lng: Number(this.uavData[currIndex].Longitude)
-                                        },
-                                    ],
-                                    icons: [{
-                                        icon: lineSymbol,
-                                        offset: '100%'
-                                    }],
-                                    geodesic: true,
-                                    strokeColor: '#42b0f4',
-                                    strokeOpacity: 1.0,
-                                    strokeWeight: 2
-                                });
-                                currUAV.uavPath.setMap(this.googlemap);
-                            } else {
-                                // add new path and update
-                                let newLatLng = new google.maps.LatLng({
-                                    lat: Number(this.uavData[currIndex].Latitude),
-                                    lng: Number(this.uavData[currIndex].Longitude)
-                                });
-                                let path = currUAV.uavPath.getPath();
-                                path.push(newLatLng); 
-                                currUAV.uavPath.setPath(path);
-                            }
-                            // currUAV.prePath.push(flightPath);
-                            // flightPath.setMap(this.googlemap);
+                            let flightPath = new google.maps.Polyline({
+                                path: [
+                                    {
+                                        lat: currUAV.lat,   
+                                        lng: currUAV.long
+                                    },
+                                    {
+                                        lat: Number(this.uavData[currIndex].Latitude),
+                                        lng: Number(this.uavData[currIndex].Longitude)
+                                    },
+                                ],
+                                icons: [{
+                                    icon: lineSymbol,
+                                    offset: '100%'
+                                }],
+                                geodesic: true,
+                                strokeColor: '#42b0f4',
+                                strokeOpacity: 1.0,
+                                strokeWeight: 2
+                            });
+                            currUAV.prePath.push(flightPath);
+                            flightPath.setMap(this.googlemap);
                         }
                         currUAV.mapmarker.setPosition({
                             lat: Number(this.uavData[currIndex].Latitude),
@@ -230,7 +216,7 @@ class syrMap {
     backtrack() {
         // console.log(this.uavMap);
         this.uavMap.forEach(this.eliminatePath);
-
+        // debugger;
         var tmp = [];
         this.pastTimeInterval.reverse().forEach(element => {
             tmp = element.concat(tmp);  

@@ -6,6 +6,7 @@ class UAV {
         this.long=Number(data.Longitude);
         this.mapmarker=mapmarker;
         this.prePath = [];
+        this.uavPath = {};
     }
 }
 
