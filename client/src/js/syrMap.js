@@ -147,10 +147,9 @@ class syrMap {
                         if (this.hideUAVFlag) {
                             currUAV.mapmarker.setMap(null);
                         }
-                        if (this.hideUAVTrackFlag) {
-                            if (Object.getOwnPropertyNames(currUAV.uavPath).length > 0) {
-                                currUAV.uavPath.setMap(null);
-                            }
+                        if (this.hideUAVTrackFlag
+                            && Object.getOwnPropertyNames(currUAV.uavPath).length > 0) {
+                            currUAV.uavPath.setMap(null);
                         }
                         //delete element in map
                         this.uavMap.delete(currID);
@@ -186,7 +185,7 @@ class syrMap {
                                 });
                                 currUAV.uavPath.setMap(this.googlemap);
                             } else {
-                                // add new path and update
+                                // update path
                                 let newLatLng = new google.maps.LatLng({
                                     lat: Number(this.uavData[currIndex].Latitude),
                                     lng: Number(this.uavData[currIndex].Longitude)
@@ -245,18 +244,8 @@ class syrMap {
     }
 
     eliminatePath(value, key, map) {
-        let deleteCout = 100;
-        // uav does not exist before 100 timestamps
-        if (value.prePath.length <= deleteCout) {
-            // console.log(this.uavMap.get(key));
-            // map.delete(key);
-            value.prePath.forEach(element => {
-                element.setMap(null);
-            });
-        } else {
-            let len = value.prePath.length;
-            value.prePath.splice(len - deleteCout, deleteCout);
-        }
+        let path = value.uavPath.getPath();
+        path.removeAt(path.length-1);
     }
 
     setTimeInterval(val) {
