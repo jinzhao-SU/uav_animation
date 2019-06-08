@@ -148,10 +148,9 @@ class syrMap {
                             currUAV.mapmarker.setMap(null);
                         }
                         if (this.hideUAVTrackFlag) {
-                            for (let item in currUAV.prePath) {
-                                currUAV.prePath[item].setMap(null);
+                            if (Object.getOwnPropertyNames(currUAV.uavPath).length > 0) {
+                                currUAV.uavPath.setMap(null);
                             }
-                            currUAV.uavPath.setMap(null);
                         }
                         //delete element in map
                         this.uavMap.delete(currID);
@@ -177,7 +176,8 @@ class syrMap {
                                     ],
                                     icons: [{
                                         icon: lineSymbol,
-                                        offset: '100%'
+                                        offset: '100%',
+                                        repeat: '20px',
                                     }],
                                     geodesic: true,
                                     strokeColor: '#42b0f4',
@@ -236,8 +236,8 @@ class syrMap {
             tmp = element.concat(tmp);  
         });
         this.uavData = tmp.concat(this.uavData);
-        this.uavMap
-        debugger;
+        // this.uavMap
+        // debugger;
     }
 
     resume() {
