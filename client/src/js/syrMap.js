@@ -113,9 +113,8 @@ class syrMap {
                     currIndex += 1;
                     continue;
                 } else {
-                    console.log(currID);
+                    // console.log(currID);
                 }
-                
 
                 //console.log("curr Index ", currIndex);
                 //console.log("curr uav ID", currID);
@@ -246,23 +245,6 @@ class syrMap {
             tmp = element.concat(tmp);  
         });
         this.uavData = tmp.concat(this.uavData);
-
-        this.uavMap.forEach(currUAV => {
-            console.log(currUAV);
-            // console.log(this.uavData);
-            // currUAV.lat = Number(this.uavData[currIndex].Latitude);
-            // currUAV.long = Number(this.uavData[currIndex].Longitude);
-            // currUAV.lat = 0;
-            // currUAV.long = 0;
-            currUAV.mapmarker.setPosition({
-                lat: 0,
-                lng: 0,
-            });
-            this.uavMap.set(currUAV.ID, currUAV);
-        });
-
-        // this.uavMap
-        // debugger;
     }
 
     resume() {
@@ -274,6 +256,14 @@ class syrMap {
         for (let i = 0; i< 15 && path.length > 0; i++) {
             path.removeAt(path.length-1);
         }
+        const len = path.getLength();
+        const latlng = path.getAt(len-1);
+
+        value.mapmarker.setPosition({
+            lat: latlng.lat(),
+            lng: latlng.lng(),
+        });
+        map.set(value.ID, value);
     }
 
     setTimeInterval(val) {
