@@ -249,6 +249,7 @@ class syrMap {
 
     resume() {
         this.fly();
+        console.log(this.timeInterval);
     }
 
     eliminatePath(value, key, map) {
