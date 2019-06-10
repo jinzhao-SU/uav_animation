@@ -220,7 +220,8 @@ class syrMap {
             }
             //move uadData loading window
             this.pastTimeInterval.push(this.uavData.splice(0, endIndex));
-            if (this.pastTimeInterval.length > 100) {
+            // if (this.pastTimeInterval.length > 100) {
+            if (this.pastTimeInterval.length > 20) {
                 this.pastTimeInterval.shift();
             }
             // this.uavData.splice(0, endIndex);
@@ -236,6 +237,7 @@ class syrMap {
     }
 
     backtrack() {
+        this.pause();
         // console.log(this.uavMap);
         this.uavMap.forEach(this.eliminatePath);
 
@@ -244,6 +246,17 @@ class syrMap {
             tmp = element.concat(tmp);  
         });
         this.uavData = tmp.concat(this.uavData);
+
+        this.uavMap.forEach(currUAV => {
+            console.log(currUAV);
+            console.log(this.uavData);
+            // currUAV.lat = Number(this.uavData[currIndex].Latitude);
+            // currUAV.long = Number(this.uavData[currIndex].Longitude);
+            // currUAV.lat
+            // currUAV.long
+            this.uavMap.set(currUAV.ID, currUAV);
+        });
+
         // this.uavMap
         // debugger;
     }
@@ -254,7 +267,9 @@ class syrMap {
 
     eliminatePath(value, key, map) {
         let path = value.uavPath.getPath();
-        path.removeAt(path.length-1);
+        for (let i = 0; i< 15 && path.length > 0; i++) {
+            path.removeAt(path.length-1);
+        }
     }
 
     setTimeInterval(val) {
