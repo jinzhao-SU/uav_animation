@@ -249,11 +249,15 @@ class syrMap {
 
         this.uavMap.forEach(currUAV => {
             console.log(currUAV);
-            console.log(this.uavData);
+            // console.log(this.uavData);
             // currUAV.lat = Number(this.uavData[currIndex].Latitude);
             // currUAV.long = Number(this.uavData[currIndex].Longitude);
-            // currUAV.lat
-            // currUAV.long
+            // currUAV.lat = 0;
+            // currUAV.long = 0;
+            currUAV.mapmarker.setPosition({
+                lat: 0,
+                lng: 0,
+            });
             this.uavMap.set(currUAV.ID, currUAV);
         });
 
