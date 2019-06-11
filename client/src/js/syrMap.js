@@ -268,17 +268,17 @@ class syrMap {
         for (let i = backstep.length-1; i >= 0; i--) {
             backstep[i].forEach(u => {
                 this.uavData.unshift(u);
-                    if (backUAVs.has(u.ID)) {
-                        backUAVs.set(u.ID, backUAVs.get(u.ID) + 1);
-                    } else {
-                        backUAVs.set(u.ID, 1);
-                    }
+                if (backUAVs.has(u.ID)) {
+                    backUAVs.set(u.ID, backUAVs.get(u.ID) + 1);
+                } else if (this.uavMap.has(u.ID)) {
+                    backUAVs.set(u.ID, 1);
+                }
             });
         }
         
+
         for (let [key, value] of backUAVs) {
             if (this.uavMap.has(key)) {
-                console.log(value);
                 let currUAv = this.uavMap.get(key);
                 let path = currUAv.uavPath.getPath();
                 while (value > 0) {
