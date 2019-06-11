@@ -244,7 +244,7 @@ class syrMap {
         let steps = 4;
         let backstep = this.pastTimeInterval.splice(this.pastTimeInterval.length - steps, steps);
 
-
+        /*
         for (let i = backstep.length-1; i >= 0; i--) {
             backstep[i].forEach(u => {
                 this.uavData.unshift(u);
@@ -261,6 +261,38 @@ class syrMap {
                     });
                 }
             });
+        }
+        */
+
+        let backUAVs = new Map();
+        for (let i = backstep.length-1; i >= 0; i--) {
+            backstep[i].forEach(u => {
+                this.uavData.unshift(u);
+                    if (backUAVs.has(u.ID)) {
+                        backUAVs.set(u.ID, backUAVs.get(u.ID) + 1);
+                    } else {
+                        backUAVs.set(u.ID, 1);
+                    }
+            });
+        }
+        
+        for (let [key, value] of backUAVs) {
+            if (this.uavMap.has(key)) {
+                console.log(value);
+                let currUAv = this.uavMap.get(key);
+                let path = currUAv.uavPath.getPath();
+                while (value > 0) {
+                    path.pop();
+                    value--;
+                }
+                const len = path.getLength();
+                const latlng = path.getAt(len-1);
+                currUAv.mapmarker.setPosition({
+                    lat: latlng.lat(),
+                    lng: latlng.lng(),
+                });
+                this.uavMap.set(key, currUAv);
+            }
         }
 
         
