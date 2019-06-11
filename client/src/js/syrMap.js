@@ -240,32 +240,29 @@ class syrMap {
 
     backtrack() {
         this.pause();
-        // this.uavMap.forEach(this.eliminatePath);
 
         let steps = 4;
         let backstep = this.pastTimeInterval.splice(this.pastTimeInterval.length - steps, steps);
 
-        for (let i = backstep.length-1; i >= 0; i--) {
-            this.uavData.unshift.apply(this.uavData, backstep[i]);
-        }
-        // sometimes uav may not move at some timestamps but we delete more times.
 
-        for (let i = 0; i < backstep.length; i++) {
-            console.log(`timestamp: ${backstep[i][0].TimeStep}`);
+        for (let i = backstep.length-1; i >= 0; i--) {
             backstep[i].forEach(u => {
-                if (u.ID === '1233186384') {
-                    console.log(`   lat: ${u.Latitude}, lng: ${u.Longitude}`);
+                this.uavData.unshift(u);
+                if (this.uavMap.has(u.ID)) {
+                    let currUAv = this.uavMap.get(u.ID);
+                    let path = currUAv.uavPath.getPath();
+                    path.removeAt(path.length-1);
+                    const len = path.getLength();
+                    const latlng = path.getAt(len-1);
+
+                    currUAv.mapmarker.setPosition({
+                        lat: latlng.lat(),
+                        lng: latlng.lng(),
+                    });
                 }
             });
         }
-        
-        console.log('----------------');
 
-        let path = this.uavMap.get('1233186384').uavPath.getPath();
-
-        for (let i = path.length-6; i < path.length; i++) {
-            console.log(`lat: ${path.getAt(i).lat()}, lng: ${path.getAt(i).lng()}`);
-        }
         
 /*
         let one = backstep[0][0];
