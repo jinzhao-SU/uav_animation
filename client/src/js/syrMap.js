@@ -110,12 +110,12 @@ class syrMap {
             while (currIndex < endIndex) {
                 currID = this.uavData[currIndex].ID;
                 
-                if (currID !== '1233186384') {
-                    currIndex += 1;
-                    continue;
-                } else {
-                    // console.log(currID);
-                }
+                // if (currID !== '1233186384') {
+                //     currIndex += 1;
+                //     continue;
+                // } else {
+                //     // console.log(currID);
+                // }
 
                 //console.log("curr Index ", currIndex);
                 //console.log("curr uav ID", currID);
@@ -221,8 +221,8 @@ class syrMap {
             //move uavData loading window
             this.pastTimeInterval.push(this.uavData.splice(0, endIndex));
 
-            // if (this.pastTimeInterval.length > 100) {
-            if (this.pastTimeInterval.length > 20) {
+            if (this.pastTimeInterval.length > 100) {
+            // if (this.pastTimeInterval.length > 20) {
                 this.pastTimeInterval.shift();
             }
             // this.uavData.splice(0, endIndex);
@@ -241,32 +241,13 @@ class syrMap {
     backtrack() {
         this.pause();
 
-        let steps = 4;
+        let steps = 2;
         let backstep = this.pastTimeInterval.splice(this.pastTimeInterval.length - steps, steps);
 
-        /*
-        for (let i = backstep.length-1; i >= 0; i--) {
-            backstep[i].forEach(u => {
-                this.uavData.unshift(u);
-                if (this.uavMap.has(u.ID)) {
-                    let currUAv = this.uavMap.get(u.ID);
-                    let path = currUAv.uavPath.getPath();
-                    path.removeAt(path.length-1);
-                    const len = path.getLength();
-                    const latlng = path.getAt(len-1);
-
-                    currUAv.mapmarker.setPosition({
-                        lat: latlng.lat(),
-                        lng: latlng.lng(),
-                    });
-                }
-            });
-        }
-        */
 
         let backUAVs = new Map();
         for (let i = backstep.length-1; i >= 0; i--) {
-            backstep[i].forEach(u => {
+            backstep[i].forEach(u => {undefined
                 this.uavData.unshift(u);
                 if (backUAVs.has(u.ID)) {
                     backUAVs.set(u.ID, backUAVs.get(u.ID) + 1);
@@ -279,49 +260,29 @@ class syrMap {
 
         for (let [key, value] of backUAVs) {
             if (this.uavMap.has(key)) {
-                let currUAv = this.uavMap.get(key);
-                let path = currUAv.uavPath.getPath();
+
+                let currUAV = this.uavMap.get(key);
+
+                if (!Object.getOwnPropertyNames(currUAV.uavPath).length > 0) continue;
+
+                let path = currUAV.uavPath.getPath();
                 while (value > 0) {
                     path.pop();
                     value--;
                 }
                 const len = path.getLength();
                 const latlng = path.getAt(len-1);
-                currUAv.mapmarker.setPosition({
+
+                if (latlng === undefined) continue;
+
+                currUAV.mapmarker.setPosition({
                     lat: latlng.lat(),
                     lng: latlng.lng(),
                 });
-                this.uavMap.set(key, currUAv);
+                this.uavMap.set(key, currUAV);
+                
             }
         }
-
-        
-/*
-        let one = backstep[0][0];
-        let two = backstep[1][0];
-        let three = backstep[2][0];
-        let four = backstep[3][0];
-        console.log(`TimeStep: ${one.TimeStep}, Latitude: ${one.Latitude}, Longitude: ${one.Longitude}`);
-        console.log(`TimeStep: ${two.TimeStep}, Latitude: ${two.Latitude}, Longitude: ${two.Longitude}`);
-        console.log(`TimeStep: ${three.TimeStep}, Latitude: ${three.Latitude}, Longitude: ${three.Longitude}`);
-        console.log(`TimeStep: ${four.TimeStep}, Latitude: ${four.Latitude}, Longitude: ${four.Longitude}`);
-
-        let index = 0;
-        let theone = this.uavData[index];
-        console.log(`TimeStep: ${theone.TimeStep}, Latitude: ${theone.Latitude}, Longitude: ${theone.Longitude}`);
-        index += backstep[0].length;
-        theone = this.uavData[index];
-        console.log(`TimeStep: ${theone.TimeStep}, Latitude: ${theone.Latitude}, Longitude: ${theone.Longitude}`);
-        index += backstep[1].length;
-        theone = this.uavData[index];
-        console.log(`TimeStep: ${theone.TimeStep}, Latitude: ${theone.Latitude}, Longitude: ${theone.Longitude}`);
-        index += backstep[2].length;
-        theone = this.uavData[index];
-        console.log(`TimeStep: ${theone.TimeStep}, Latitude: ${theone.Latitude}, Longitude: ${theone.Longitude}`);
-        index += backstep[3].length;
-        theone = this.uavData[index];
-        console.log(`TimeStep: ${theone.TimeStep}, Latitude: ${theone.Latitude}, Longitude: ${theone.Longitude}`);
-*/
 
     }
 
