@@ -32,6 +32,10 @@ class syrMap {
         this.showEndArea();
         
         this.pastTimeInterval = [];
+
+
+        // use for debugger
+        this.onBack = false;
     }
 
 
@@ -114,6 +118,13 @@ class syrMap {
                     continue;
                 } else {
                     // console.log(currID);
+                    if (this.onBack) {
+                        console.log('-------resume fly-------');
+                        console.log(`${this.uavData[currIndex].TimeStep}`);
+                        let theone = this.uavData[currIndex];
+                        console.log(`TimeStep: ${theone.TimeStep}, Latitude: ${theone.Latitude}, Longitude: ${theone.Longitude}`);
+                        this.onBack = false;
+                    }
                 }
 
                 //console.log("curr Index ", currIndex);
@@ -193,6 +204,11 @@ class syrMap {
                                 });
                                 currUAV.uavPath.setMap(this.googlemap);
                             } else {
+                                if (this.onBack) {
+                                    console.log('-------current Index --------')
+                                    console.log(`currIndex is ${currIndex}`)
+                                    this.onBack = false;
+                                }
                                 // update path
                                 let newLatLng = new google.maps.LatLng({
                                     lat: Number(this.uavData[currIndex].Latitude),
@@ -217,8 +233,9 @@ class syrMap {
                 }
                 currIndex += 1;
             }
-            //move uadData loading window
+            //move uavData loading window
             this.pastTimeInterval.push(this.uavData.splice(0, endIndex));
+
             // if (this.pastTimeInterval.length > 100) {
             if (this.pastTimeInterval.length > 20) {
                 this.pastTimeInterval.shift();
@@ -227,34 +244,73 @@ class syrMap {
 
         }, this.timeInterval);
         this.timeoutArr.push(intervalId);
+
     }
 
     pause() {        
         for (let item in this.timeoutArr) {
             clearTimeout(this.timeoutArr[item]);
         }
+        console.log('--------pause time--------------');
+        console.log(this.uavData[0].TimeStep);
+        console.log(this.uavData[0]);
     }
 
     backtrack() {
         this.pause();
-        // console.log(this.uavMap);
         this.uavMap.forEach(this.eliminatePath);
 
-        var tmp = [];
-        this.pastTimeInterval.reverse().forEach(element => {
-            tmp = element.concat(tmp);  
-        });
-        this.uavData = tmp.concat(this.uavData);
+        console.log('--------show steps--------------');
+        let steps = 4;
+        let backstep = this.pastTimeInterval.splice(this.pastTimeInterval.length - steps, steps);
+        console.log(backstep);
+
+        for (let i = backstep.length-1; i >= 0; i--) {
+            this.uavData.unshift.apply(this.uavData, backstep[i]);
+        }
+        
+        let one = backstep[0][0];
+        let two = backstep[1][0];
+        let three = backstep[2][0];
+        let four = backstep[3][0];
+        console.log(`TimeStep: ${one.TimeStep}, Latitude: ${one.Latitude}, Longitude: ${one.Longitude}`);
+        console.log(`TimeStep: ${two.TimeStep}, Latitude: ${two.Latitude}, Longitude: ${two.Longitude}`);
+        console.log(`TimeStep: ${three.TimeStep}, Latitude: ${three.Latitude}, Longitude: ${three.Longitude}`);
+        console.log(`TimeStep: ${four.TimeStep}, Latitude: ${four.Latitude}, Longitude: ${four.Longitude}`);
+
+        console.log('--------after  concat--------------');
+
+        let index = 0;
+        let theone = this.uavData[index];
+        console.log(`TimeStep: ${theone.TimeStep}, Latitude: ${theone.Latitude}, Longitude: ${theone.Longitude}`);
+        index += backstep[0].length;
+        theone = this.uavData[index];
+        console.log(`TimeStep: ${theone.TimeStep}, Latitude: ${theone.Latitude}, Longitude: ${theone.Longitude}`);
+        index += backstep[1].length;
+        theone = this.uavData[index];
+        console.log(`TimeStep: ${theone.TimeStep}, Latitude: ${theone.Latitude}, Longitude: ${theone.Longitude}`);
+        index += backstep[2].length;
+        theone = this.uavData[index];
+        console.log(`TimeStep: ${theone.TimeStep}, Latitude: ${theone.Latitude}, Longitude: ${theone.Longitude}`);
+        index += backstep[3].length;
+        theone = this.uavData[index];
+        console.log(`TimeStep: ${theone.TimeStep}, Latitude: ${theone.Latitude}, Longitude: ${theone.Longitude}`);
+
+
+        this.onBack = true;
+
     }
 
     resume() {
-        this.fly();
-        console.log(this.timeInterval);
+        // this.fly();
+        
+        console.log('-----------resuem----------');
+        console.log(this.uavData[0][0].TimeStep);
     }
 
     eliminatePath(value, key, map) {
         let path = value.uavPath.getPath();
-        for (let i = 0; i< 15 && path.length > 0; i++) {
+        for (let i = 0; i< 4 && path.length > 0; i++) {
             path.removeAt(path.length-1);
         }
         const len = path.getLength();
