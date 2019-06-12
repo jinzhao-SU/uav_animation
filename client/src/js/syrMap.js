@@ -1,3 +1,5 @@
+/*global google*/
+
 import UAV from './UAV'
 import UAVImage from '../assets/uav.png'
 
@@ -6,7 +8,12 @@ class syrMap {
     constructor(mapID, uavdata, startArea, endArea) {
         this.googlemap = new google.maps.Map(document.getElementById(mapID), {
             zoom: 13,
-            center: {lat: 43.0481221, lng: -76.14742439999999}
+            center: {lat: 43.0481221, lng: -76.14742439999999},
+            mapTypeControl: true,
+            mapTypeControlOptions: {
+                style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
+                position: google.maps.ControlPosition.RIGHT_TOP
+            },
         });
         //for animation
         this.timeoutArr = [];
@@ -328,7 +335,7 @@ class syrMap {
         this.hideUAVFlag = document.getElementById('uavHideChkBox').checked;
         this.hideUAVTrackFlag = document.getElementById('uavHideChkBox').checked;
     }
-    getCurrTime(currtime) {
+    getCurrTime() {
         this.updateCurrtimeFlag = true;
         this.updatedCurrTime = Number(document.getElementById('setCurtime').value);
     }
