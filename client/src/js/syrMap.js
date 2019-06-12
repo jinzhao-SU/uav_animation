@@ -254,7 +254,7 @@ class syrMap {
 
         let backUAVs = new Map();
         for (let i = backstep.length-1; i >= 0; i--) {
-            backstep[i].forEach(u => {undefined
+            backstep[i].forEach(u => {
                 this.uavData.unshift(u);
                 if (backUAVs.has(u.ID)) {
                     backUAVs.set(u.ID, backUAVs.get(u.ID) + 1);
@@ -264,30 +264,10 @@ class syrMap {
             });
         }
         
-
         for (let [key, value] of backUAVs) {
             if (this.uavMap.has(key)) {
-
                 let currUAV = this.uavMap.get(key);
-
-                if (!Object.getOwnPropertyNames(currUAV.uavPath).length > 0) continue;
-
-                let path = currUAV.uavPath.getPath();
-                while (value > 0) {
-                    path.pop();
-                    value--;
-                }
-                const len = path.getLength();
-                const latlng = path.getAt(len-1);
-
-                if (latlng === undefined) continue;
-
-                currUAV.mapmarker.setPosition({
-                    lat: latlng.lat(),
-                    lng: latlng.lng(),
-                });
-                this.uavMap.set(key, currUAV);
-                
+                currUAV.back(value, this.uavMap);
             }
         }
 
@@ -295,21 +275,6 @@ class syrMap {
 
     resume() {
         this.fly();
-    }
-
-    eliminatePath(value, key, map) {
-        let path = value.uavPath.getPath();
-        for (let i = 0; i< 4 && path.length > 0; i++) {
-            path.removeAt(path.length-1);
-        }
-        const len = path.getLength();
-        const latlng = path.getAt(len-1);
-
-        value.mapmarker.setPosition({
-            lat: latlng.lat(),
-            lng: latlng.lng(),
-        });
-        map.set(value.ID, value);
     }
 
     setTimeInterval(val) {
