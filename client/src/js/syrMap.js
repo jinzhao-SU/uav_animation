@@ -40,6 +40,13 @@ class syrMap {
         
         this.pastTimeInterval = [];
 
+        this.missingIcon = {
+            path: google.maps.SymbolPath.CIRCLE,
+            scale: 10,
+            fillColor: "#7CFC00",
+            fillOpacity: 2,
+            strokeWeight: 6,
+        };
     }
 
 
@@ -117,12 +124,12 @@ class syrMap {
             while (currIndex < endIndex) {
                 currID = this.uavData[currIndex].ID;
                 
-                if (currID !== '1233186384') {
-                    currIndex += 1;
-                    continue;
-                } else {
-                    // console.log(currID);
-                }
+                // if (currID !== '1233186384') {
+                //     currIndex += 1;
+                //     continue;
+                // } else {
+                //     // console.log(currID);
+                // }
 
                 //console.log("curr Index ", currIndex);
                 //console.log("curr uav ID", currID);
@@ -146,7 +153,8 @@ class syrMap {
                             lng: Number(this.uavData[currIndex].Longitude)
                         },
                         map: this.googlemap,
-                        icon: image,
+                        icon: this.missingIcon,
+                        // icon: image,
                         label: labelid
                     });
                     //new obj insert to uavMap
