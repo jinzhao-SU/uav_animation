@@ -255,7 +255,7 @@ class syrMap {
 
         let backUAVs = new Map();
         for (let i = backstep.length-1; i >= 0; i--) {
-            backstep[i].forEach(u => {undefined
+            backstep[i].forEach(u => {
                 this.uavData.unshift(u);
                 if (backUAVs.has(u.ID)) {
                     backUAVs.set(u.ID, backUAVs.get(u.ID) + 1);
@@ -267,8 +267,8 @@ class syrMap {
         
         for (let [key, value] of backUAVs) {
             if (this.uavMap.has(key)) {
-
                 let currUAV = this.uavMap.get(key);
+<<<<<<< HEAD
 
                 if (!Object.getOwnPropertyNames(currUAV.uavPath).length > 0) continue;
 
@@ -287,6 +287,9 @@ class syrMap {
                     lng: latlng.lng(),
                 });
                 this.uavMap.set(key, currUAV);       
+=======
+                currUAV.back(value, this.uavMap);
+>>>>>>> 8478fa28d0b9aabd3fb1389d7cc61c87c11d583c
             }
         }
     }
