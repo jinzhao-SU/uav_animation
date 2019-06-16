@@ -117,12 +117,12 @@ class syrMap {
             while (currIndex < endIndex) {
                 currID = this.uavData[currIndex].ID;
                 
-                // if (currID !== '1233186384') {
-                //     currIndex += 1;
-                //     continue;
-                // } else {
-                //     // console.log(currID);
-                // }
+                if (currID !== '1233186384') {
+                    currIndex += 1;
+                    continue;
+                } else {
+                    // console.log(currID);
+                }
 
                 //console.log("curr Index ", currIndex);
                 //console.log("curr uav ID", currID);
@@ -245,10 +245,11 @@ class syrMap {
         }
     }
 
-    backtrack() {
+    backtrack(backFlag) {
+        // console.log(backFlag);
         this.pause();
-
-        let steps = 2;
+        
+        let steps = backFlag;
         let backstep = this.pastTimeInterval.splice(this.pastTimeInterval.length - steps, steps);
 
 
@@ -264,7 +265,6 @@ class syrMap {
             });
         }
         
-
         for (let [key, value] of backUAVs) {
             if (this.uavMap.has(key)) {
 
@@ -286,30 +286,13 @@ class syrMap {
                     lat: latlng.lat(),
                     lng: latlng.lng(),
                 });
-                this.uavMap.set(key, currUAV);
-                
+                this.uavMap.set(key, currUAV);       
             }
         }
-
     }
 
     resume() {
         this.fly();
-    }
-
-    eliminatePath(value, key, map) {
-        let path = value.uavPath.getPath();
-        for (let i = 0; i< 4 && path.length > 0; i++) {
-            path.removeAt(path.length-1);
-        }
-        const len = path.getLength();
-        const latlng = path.getAt(len-1);
-
-        value.mapmarker.setPosition({
-            lat: latlng.lat(),
-            lng: latlng.lng(),
-        });
-        map.set(value.ID, value);
     }
 
     setTimeInterval(val) {

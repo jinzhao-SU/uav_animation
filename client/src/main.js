@@ -3,8 +3,10 @@ import App from './App.vue'
 import './assets/styles.less'
 import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
+import Ripple from 'vue-ripple-directive'
 
 Vue.use(Vuetify)
+Vue.directive('ripple', Ripple);
 
 window.Event = new class {
   constructor() {

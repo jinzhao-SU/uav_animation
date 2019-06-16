@@ -246,7 +246,7 @@ html {
     /* background-color: rgb(245, 245, 245); */
     background-color: white;
     overflow-x: hidden; /* Disable horizontal scroll */
-    padding-top: 60px; /* Place content 60px from the top */
+    padding-top: 40px; /* Place content 60px from the top */
     transition: 0.5s; /*0.5 second transition effect to slide in the sidenav*/
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
 }
@@ -256,7 +256,7 @@ html {
 }
 .bm-item-list {
     color: #b8b7ad;
-    margin: 5px 15px 5px 15px;
+    margin: 0px 15px 5px 15px;
     font-size: 20px;
 
     > * {

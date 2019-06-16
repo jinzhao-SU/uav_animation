@@ -12,6 +12,7 @@
     "core-js": "^2.6.5",
     "oboe": "^2.1.4",
     "vue": "^2.6.10",
+    "vue-ripple-directive": "^2.0.1",
     "vue2-google-maps": "^0.10.6",
     "vuetify": "^1.5.14"
   },

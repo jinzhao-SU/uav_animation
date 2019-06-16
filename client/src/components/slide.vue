@@ -3,12 +3,20 @@
         <Menu v-bind="this.$attrs" @openMenu="openMenu" @closeMenu="closeMenu">
             <slot>
                 <div class='uavControlBtn'>
-                    <button v-on:click="startFly" class='startBtn'>start</button>
-                    <button v-on:click="pauseFly" class='pauseBtn'>pause</button>
-                    <button v-on:click="resumeFly" class='resumeBtn'>resume</button>
+                    <button v-ripple
+                        v-on:click="startFly" class='button firstBtn'>start</button>
+                    <button v-ripple
+                        v-on:click="pauseFly" class='button secondBtn'>pause</button>
+                    <button v-ripple
+                        v-on:click="resumeFly" class='button thirdBtn'>resume</button>
                 </div>
                 <div class='uavControlBtn'>
-                    <button v-on:click="backtrack" class='backtrackBtn'>back</button>
+                    <button v-ripple
+                        v-on:click="backtrack(2)" class='button firstBtn'>&#8594;</button>
+                    <button v-ripple
+                        v-on:click="backtrack(4)" class='button secondBtn'>&#8649;</button>
+                    <button v-ripple
+                        v-on:click="backtrack(8)" class='button thirdBtn'>&#8694;</button>
                 </div>
                 <uavinfo/>
             </slot>
@@ -43,8 +51,8 @@ export default {
         resumeFly() {
             Event.fire('resumeFly');
         },
-        backtrack() {
-            Event.fire('backtrack');
+        backtrack(flag) {
+            Event.fire('backtrack', flag);
         },
     }
 };
@@ -52,27 +60,39 @@ export default {
 <style  lang="less">
 .uavControlBtn {
     background-color: white;
-    border-radius: 10px;
+    border-radius: 15px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    margin-top: 10px;
+    padding: 0px;
 
     > button {
-        width: 70px;
-        height: 70px;
+        // width: 70px;
+        width: 100%;
+        height: 80px;
         margin: 0 auto;
-        border-radius: 20px;
+        // border-radius: 20px;
         box-shadow: none;
+        outline: none;
+        color: black;
+        &:hover {
+            background-color: rgb(219,218,218);
+        }
     }
-    .startBtn {
+    
+    .firstBtn {
+        border-radius: 15px 0px 0px 15px;
         background-color: aqua;
     }
-    .pauseBtn {
+    .secondBtn {
+        margin: 0px 3px 0px 3px;
+        border-style: solid;
+        border-width: 0px 1px 0px 1px;
+        
         background-color: red;
     }
-    .resumeBtn {
+    .thirdBtn {
+        border-radius: 0px 15px 15px 0px;
         background-color: yellow;
-    }
-    .backtrackBtn{
-        background-color: greenyellow;
     }
 }
 
