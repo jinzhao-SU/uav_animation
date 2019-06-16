@@ -117,12 +117,12 @@ class syrMap {
             while (currIndex < endIndex) {
                 currID = this.uavData[currIndex].ID;
                 
-                if (currID !== '1233186384') {
-                    currIndex += 1;
-                    continue;
-                } else {
-                    // console.log(currID);
-                }
+                // if (currID !== '1233186384') {
+                //     currIndex += 1;
+                //     continue;
+                // } else {
+                //     // console.log(currID);
+                // }
 
                 //console.log("curr Index ", currIndex);
                 //console.log("curr uav ID", currID);
