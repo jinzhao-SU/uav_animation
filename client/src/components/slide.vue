@@ -11,12 +11,15 @@
                         v-on:click="resumeFly" class='button thirdBtn'>resume</button>
                 </div>
                 <div class='uavControlBtn'>
-                    <button v-ripple
-                        v-on:click="backtrack(2)" class='button firstBtn'>&#8594;</button>
-                    <button v-ripple
-                        v-on:click="backtrack(4)" class='button secondBtn'>&#8649;</button>
-                    <button v-ripple
-                        v-on:click="backtrack(8)" class='button thirdBtn'>&#8694;</button>
+                    <button v-ripple v-on:click="backtrack(2)" class='button firstBtn'>
+                        <img src="../assets/playback2.png">
+                    </button>
+                    <button v-ripple v-on:click="backtrack(4)" class='button secondBtn'>
+                        <img src="../assets/playback4.png">
+                    </button>
+                    <button v-ripple v-on:click="backtrack(8)" class='button thirdBtn'>
+                        <img src="../assets/playback8.png">
+                    </button>
                 </div>
                 <uavinfo/>
             </slot>
