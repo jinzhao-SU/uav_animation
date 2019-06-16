@@ -268,7 +268,6 @@ class syrMap {
         for (let [key, value] of backUAVs) {
             if (this.uavMap.has(key)) {
                 let currUAV = this.uavMap.get(key);
-<<<<<<< HEAD
 
                 if (!Object.getOwnPropertyNames(currUAV.uavPath).length > 0) continue;
 
@@ -287,15 +286,13 @@ class syrMap {
                     lng: latlng.lng(),
                 });
                 this.uavMap.set(key, currUAV);       
-=======
-                currUAV.back(value, this.uavMap);
->>>>>>> 8478fa28d0b9aabd3fb1389d7cc61c87c11d583c
             }
         }
     }
 
     resume() {
         this.fly();
+        console.log(this.timeInterval);
     }
 
     setTimeInterval(val) {
