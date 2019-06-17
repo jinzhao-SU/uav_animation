@@ -23,19 +23,19 @@
       return {
         speeds: 3,
         ticksLabels: [
-          'fast',
+          'slow',
           '',
           '',
           'normal',
           '',
           '',
-          'slow',
+          'fast',
         ],
       }
     },
     updated() {
-        // console.log(this.speeds);
-        this.setTimeInterval(this.speeds * 20);
+        // console.log(6 - this.speeds);
+        this.setTimeInterval((6 - this.speeds) * 20);
     },
     methods: {
         setTimeInterval(speed) {

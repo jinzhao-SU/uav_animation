@@ -32,12 +32,13 @@ class syrMap {
         this.hideUAVFlag = document.getElementById('uavHideChkBox').checked;
         this.hideUAVTrackFlag = document.getElementById('uavHideChkBox').checked;
         this.updateCurrtimeFlag = false;
+        this.flying = false;
         //store all the flying uav
         this.uavMap = new Map();
         //show area
         this.showStartArea();
         this.showEndArea();
-        
+        // for playback
         this.pastTimeInterval = [];
 
         this.missingIcon = {
@@ -101,6 +102,12 @@ class syrMap {
     }
 
     fly() {
+        if (this.flying) {
+            return;
+        } else {
+            this.flying = true;
+        }
+
         if (this.updateCurrtimeFlag) {
             this.updateCurrtime();
         }
@@ -247,7 +254,8 @@ class syrMap {
 
     }
 
-    pause() {        
+    pause() {
+        this.flying = false;        
         for (let item in this.timeoutArr) {
             clearTimeout(this.timeoutArr[item]);
         }
@@ -306,8 +314,14 @@ class syrMap {
     setTimeInterval(val) {
         // this.timeInterval = document.getElementById('timeinterval').value;
         this.timeInterval = val;
-        this.pause();
-        this.resume();
+        
+        if (this.flying) {
+            this.pause();
+            this.resume();
+        } else {
+            this.pause();
+        }
+        
     }
 
     setTimeIntervalRange() {
