@@ -50,4 +50,15 @@
         min-height: 0;
     } 
 }
+
+.v-card {
+  .ripple-container {
+    height: 0px !important;
+    width: 0px !important;
+  }
+  .v-card__text {
+    background-color: white;
+  }
+}
+
 </style>
