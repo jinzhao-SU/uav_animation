@@ -2,7 +2,7 @@
     <div>
         <Menu v-bind="this.$attrs" @openMenu="openMenu" @closeMenu="closeMenu">
             <slot>
-                <div class='uavControlBtn'>
+                <div class='uavControlBtn control'>
                     <button v-ripple
                         v-on:click="startFly" class='button firstBtn'>start</button>
                     <button v-ripple
@@ -11,13 +11,13 @@
                         v-on:click="resumeFly" class='button thirdBtn'>resume</button>
                 </div>
                 <div class='uavControlBtn'>
-                    <button v-ripple v-on:click="backtrack(2)" class='button firstBtn'>
+                    <button v-ripple v-on:click="backtrack(2)" class='playback'>
                         <img src="../assets/playback2.png">
                     </button>
-                    <button v-ripple v-on:click="backtrack(4)" class='button secondBtn'>
+                    <button v-ripple v-on:click="backtrack(4)" class='playback'>
                         <img src="../assets/playback4.png">
                     </button>
-                    <button v-ripple v-on:click="backtrack(8)" class='button thirdBtn'>
+                    <button v-ripple v-on:click="backtrack(8)" class='playback'>
                         <img src="../assets/playback8.png">
                     </button>
                 </div>
@@ -62,12 +62,14 @@ export default {
 </script>
 <style  lang="less">
 .uavControlBtn {
-    background-color: white;
-    border-radius: 15px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-    margin-top: 10px;
-    padding: 0px;
-
+    .control {
+        background-color: white;
+        border-radius: 15px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        margin-top: 10px;
+        padding: 0px;
+    }
+    
     > button {
         // width: 70px;
         width: 100%;
@@ -82,6 +84,12 @@ export default {
         }
     }
     
+    .playback {
+        border-radius: 50px 50px 50px 50px;
+        width: 60px;
+        height: 60px;
+    }
+
     .firstBtn {
         border-radius: 15px 0px 0px 15px;
         background-color: aqua;
