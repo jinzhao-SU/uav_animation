@@ -10,6 +10,8 @@
                     <button v-ripple
                         v-on:click="resumeFly" class='button thirdBtn'>resume</button>
                 </div>
+                <div class="separate-line" style="padding: 0px;"></div>
+                <label class="label">Playback:</label>
                 <div class='uavControlBtn'>
                     <button v-ripple v-on:click="backtrack(2)" class='playback'>
                         <img src="../assets/playback2.png">
@@ -104,6 +106,20 @@ export default {
     .thirdBtn {
         border-radius: 0px 15px 15px 0px;
         background-color: yellow;
+    }
+    .label {
+        text-transform: uppercase;
+        display:inline-block;
+        width: 80%;
+        text-align: center;
+        text-decoration:none;
+        font-size: 13px;
+    }
+    .separate-line {
+        height: 0;
+        border-top: 1px solid #f0f0f0;
+        flex: none;
+        white-space: normal;
     }
 }
 
