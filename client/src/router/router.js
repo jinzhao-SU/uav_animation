@@ -9,7 +9,7 @@ export default new Router({
     mode: 'history',
     routes: [
         {
-            path: '/:index',
+            path: '/:proactive',
             name: 'Map',
             props: true,
             components: {

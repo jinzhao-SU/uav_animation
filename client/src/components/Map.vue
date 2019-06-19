@@ -1,5 +1,5 @@
 <template>
-    <div id="test">{{this.$route.params.index}}</div>
+    <div></div>
 </template>
 
 <script>
@@ -14,7 +14,7 @@ const urlUAV = 'uav/uav/'
 export default {
     name: 'GoogleMap',
     props: [
-        'index'
+        'proactive'
     ],
     data() {
         return {
@@ -29,13 +29,15 @@ export default {
     },
     async created () {
         try {
-            console.log(this.index);
+
+            console.log(this.proactive);
+            console.log(this.proactive === 'proactive');
             // get data
             this.startData = await this.getStartData();
             this.endData = await this.getEndData();
             this.uavData = await this.getUAVData();
             // init map
-            if (this.index === 'proactive') {
+            if (this.proactive === 'proactive') {
                 this.mapGoogle = new syrMap('map',this.uavData,this.startData,this.endData);
             } else {
                 this.mapGoogle = new syrMap2('map',this.uavData,this.startData,this.endData);
