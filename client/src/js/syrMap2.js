@@ -3,7 +3,7 @@
 import UAV from './UAV'
 import UAVImage from '../assets/uav.png'
 
-class syrMap {
+class syrMap2 {
 
     constructor(mapID, uavdata, startArea, endArea) {
         this.googlemap = new google.maps.Map(document.getElementById(mapID), {
@@ -373,8 +373,7 @@ class syrMap {
         //move to that timestep
         this.uavData.splice(0, resultIndex);
     }
-
 }
 
 
-export default syrMap;
+export default syrMap2;

@@ -6,6 +6,7 @@
 import oboe from 'oboe'
 import axios from 'axios';
 import syrMap from '../js/syrMap'
+import syrMap2 from '../js/syrMap2'
 const urlStartArea = 'uav/startArea/'
 const urlEndArea = 'uav/endArea/'
 const urlUAV = 'uav/uav/'
@@ -14,23 +15,30 @@ export default {
     name: 'GoogleMap',
     data() {
         return {
-            message: 'Here is Map.vue12',
+            message: 'Here is Map.vue',
             timer: 'a',
             dr: {},
             startData: [],
             endData: [],
             uavData: [],
             mapGoogle: {},
+            index: this.$route.params.index,
         };
     },
     async created () {
         try {
+            // console.log(this.index);
             // get data
             this.startData = await this.getStartData();
             this.endData = await this.getEndData();
             this.uavData = await this.getUAVData();
             // init map
-            this.mapGoogle = new syrMap('map',this.uavData,this.startData,this.endData);
+            if (this.index === '1') {
+                this.mapGoogle = new syrMap('map',this.uavData,this.startData,this.endData);
+            } else {
+                this.mapGoogle = new syrMap2('map',this.uavData,this.startData,this.endData);
+            }
+            
 
             // uav event listener
             Event.listen('startFly', ()=> this.mapGoogle.fly());
