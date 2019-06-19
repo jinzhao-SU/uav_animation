@@ -1,3 +1,0 @@
-hideUAVTrackFlag: cannot hide Polyline immediately
-
-backtrack: unfinished
