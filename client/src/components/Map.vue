@@ -5,9 +5,7 @@
 <script>
 import oboe from 'oboe'
 import axios from 'axios';
-
 import syrMap from '../js/syrMap'
-// import dataReceiver from '../js/dataReceiver'
 const urlStartArea = 'uav/startArea/'
 const urlEndArea = 'uav/endArea/'
 const urlUAV = 'uav/uav/'

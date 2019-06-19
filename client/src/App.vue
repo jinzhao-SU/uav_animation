@@ -1,16 +1,16 @@
 <template>
   <div id="app">
-    <Map/>
-    <component 
+    <!-- <Map/> -->
+    <router-view name="main"/>
+    <router-view name="sidepanel"/>
+    <!-- <component 
       :is="currentMenu" :right="side === 'right' ? true: false">
-    </component>
+    </component> -->
   </div>
 </template>
 
-<script>
-// import PostComponent from './components/PostComponent.vue';
+<!--<script>
 import slide from './components/slide';
-// import Menu from './components/Menu';
 import Map from "./components/Map.vue"
 
 export default {
@@ -25,13 +25,13 @@ export default {
     slide,
     Map,
   },
-  methods: {
-    
-  },
-  mounted() {
-    
-  },
 }
+</script>-->
+
+<script>
+  export default {
+    name: 'app',
+  }
 </script>
 
 <style lang="less">
