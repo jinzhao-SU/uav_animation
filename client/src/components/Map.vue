@@ -1,5 +1,5 @@
 <template>
-    <div></div>
+    <div id="test">{{this.$route.params.index}}</div>
 </template>
 
 <script>
@@ -35,7 +35,7 @@ export default {
             this.endData = await this.getEndData();
             this.uavData = await this.getUAVData();
             // init map
-            if (this.index === '1') {
+            if (this.index === 'proactive') {
                 this.mapGoogle = new syrMap('map',this.uavData,this.startData,this.endData);
             } else {
                 this.mapGoogle = new syrMap2('map',this.uavData,this.startData,this.endData);

@@ -11,6 +11,7 @@ export default new Router({
         {
             path: '/:index',
             name: 'Map',
+            props: true,
             components: {
                 main: Map,
                 sidepanel: Slide,

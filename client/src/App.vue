@@ -9,25 +9,6 @@
   </div>
 </template>
 
-<!--<script>
-import slide from './components/slide';
-import Map from "./components/Map.vue"
-
-export default {
-  name: 'app',
-  data() {
-    return {
-      side: 'left',
-      currentMenu: 'slide'
-    };
-  },
-  components: {
-    slide,
-    Map,
-  },
-}
-</script>-->
-
 <script>
   export default {
     name: 'app',
@@ -41,7 +22,6 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  // margin-top: 60px;
 }
 
 </style>
