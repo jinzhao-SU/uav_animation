@@ -14,7 +14,11 @@ export default new Router({
             components: {
                 main: Map,
                 sidepanel: Slide,
-            }
+            },
+            props: { 
+                main: true, 
+                sidepanel: false 
+            },
         },
         {
             path: '/',

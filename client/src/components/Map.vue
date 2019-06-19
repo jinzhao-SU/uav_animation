@@ -13,6 +13,9 @@ const urlUAV = 'uav/uav/'
 
 export default {
     name: 'GoogleMap',
+    props: [
+        'index'
+    ],
     data() {
         return {
             message: 'Here is Map.vue',
@@ -22,12 +25,11 @@ export default {
             endData: [],
             uavData: [],
             mapGoogle: {},
-            index: this.$route.params.index,
         };
     },
     async created () {
         try {
-            // console.log(this.index);
+            console.log(this.index);
             // get data
             this.startData = await this.getStartData();
             this.endData = await this.getEndData();
