@@ -40,11 +40,11 @@ export default {
             let regexpress = /reactive*/;
             let flag = -1;
             let stmt = this.proactive;
+            stmt ? stmt : stmt = '';
+            console.log(`stmt: ${stmt}`);
             if (stmt.match(regexpress)) {
                 flag = stmt.substring(stmt.length-1, stmt.length);
                 stmt = 'reactive';
-            } else {
-                
             }
             switch(stmt) {
                 case 'proactive':

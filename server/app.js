@@ -9,9 +9,6 @@ app.use(bodyParser.json())
 app.use(cors())
 
 
-const posts = require('./routes/api/posts')
-app.use('/api/posts', posts)
-
 const endArea = require('./routes/uav/endArea')
 app.use('/uav/endArea', endArea)
 const startArea = require('./routes/uav/startArea')
