@@ -7,6 +7,8 @@ import oboe from 'oboe'
 import axios from 'axios';
 import syrMap from '../js/syrMap'
 import syrMap2 from '../js/syrMap2'
+import syrMap_r from '../js/syrMap_r'
+import { constants } from 'crypto';
 const urlStartArea = 'uav/startArea/'
 const urlEndArea = 'uav/endArea/'
 const urlUAV = 'uav/uav/'
@@ -14,7 +16,7 @@ const urlUAV = 'uav/uav/'
 export default {
     name: 'GoogleMap',
     props: [
-        'proactive'
+        'proactive',
     ],
     data() {
         return {
@@ -29,18 +31,43 @@ export default {
     },
     async created () {
         try {
-
-            console.log(this.proactive);
-            console.log(this.proactive === 'proactive');
+            console.log(`proactive: ${this.proactive}`);
             // get data
             this.startData = await this.getStartData();
             this.endData = await this.getEndData();
             this.uavData = await this.getUAVData();
             // init map
-            if (this.proactive === 'proactive') {
-                this.mapGoogle = new syrMap('map',this.uavData,this.startData,this.endData);
+            let regexpress = /reactive*/;
+            let flag = -1;
+            let stmt = this.proactive;
+            if (stmt.match(regexpress)) {
+                flag = stmt.substring(stmt.length-1, stmt.length);
+                stmt = 'reactive';
             } else {
-                this.mapGoogle = new syrMap2('map',this.uavData,this.startData,this.endData);
+                
+            }
+            switch(stmt) {
+                case 'proactive':
+                    this.mapGoogle = new syrMap2('map',this.uavData,this.startData,this.endData);
+                    break;
+                case 'reactive':
+                    if (flag === 'e') {
+                        console.log(`flag: ${flag}`);
+                    } else if (flag === '1') {
+                        console.log(`flag: ${flag}`);
+                    } else if (flag === '2') {
+                        console.log(`flag: ${flag}`);
+                    } else {
+                        console.log(`flag: ${flag}`);
+                    }
+                    this.mapGoogle = new syrMap('map',this.uavData,this.startData,this.endData);
+                    break;
+                case 'redue-to-point':
+                    this.mapGoogle = new syrMap_r('map',this.uavData,this.startData,this.endData);
+                    break;
+                default:
+                    this.mapGoogle = new syrMap('map',this.uavData,this.startData,this.endData);
+                    
             }
             
 

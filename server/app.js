@@ -24,8 +24,8 @@ app.use('/uav/uav', uav)
 //     app.use(express.static(__dirname + '/public/'));
 //     app.get(/.*/, (req, res) => res.sendFile(__dirname + '/public/index.html'));
 // }
-if (process.env.NODE_ENV === 'test') {
-    console.log('test mode');
+if (process.env.NODE_ENV === 'start') {
+    console.log('start mode');
 } else {
     console.log('production mode');
     app.use(express.static(__dirname + '/public/'));
