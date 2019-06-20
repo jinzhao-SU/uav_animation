@@ -20,7 +20,14 @@ const uav = require('./routes/uav/uav')
 app.use('/uav/uav', uav)
 
 
-if (process.env.NODE_ENV === 'production') {
+// if (process.env.NODE_ENV === 'production') {
+//     app.use(express.static(__dirname + '/public/'));
+//     app.get(/.*/, (req, res) => res.sendFile(__dirname + '/public/index.html'));
+// }
+if (process.env.NODE_ENV === 'test') {
+    console.log('test mode');
+} else {
+    console.log('production mode');
     app.use(express.static(__dirname + '/public/'));
     app.get(/.*/, (req, res) => res.sendFile(__dirname + '/public/index.html'));
 }

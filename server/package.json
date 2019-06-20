@@ -6,7 +6,8 @@
   "scripts": {
     "start": "./node_modules/nodemon/bin/nodemon.js app.js --exec 'npm run lint && node'",
     "lint": "./node_modules/.bin/eslint *.js",
-    "prod": "NODE_ENV=production node app.js"
+    "prod": "NODE_ENV=production node app.js",
+    "test": "NODE_ENV=test node app.js"
   },
   "keywords": [],
   "author": "",
