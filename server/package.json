@@ -4,9 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "NODE_ENV=start ./node_modules/nodemon/bin/nodemon.js app.js --exec 'npm run lint && node'",
+    "starteslint": "NODE_ENV=start ./node_modules/nodemon/bin/nodemon.js ./bin/www --exec 'npm run lint && node'",
+    "start": "NODE_ENV=start nodemon ./bin/www",
     "lint": "./node_modules/.bin/eslint *.js",
-    "prod": "NODE_ENV=production node app.js"
+    "prod": "NODE_ENV=production node ./bin/www"
   },
   "keywords": [],
   "author": "",
