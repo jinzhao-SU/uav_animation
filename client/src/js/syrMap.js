@@ -257,14 +257,10 @@ class syrMap {
             this.pastTimeInterval.push(this.uavData.splice(0, endIndex));
 
             if (this.pastTimeInterval.length > 100) {
-            // if (this.pastTimeInterval.length > 20) {
                 this.pastTimeInterval.shift();
             }
-            // this.uavData.splice(0, endIndex);
-
         }, this.timeInterval);
         this.timeoutArr.push(intervalId);
-
     }
 
     pause() {

@@ -24,16 +24,19 @@ class syrMap_nocheck {
         //flags
         this.showTrackFlag = document.getElementById('uavTrackChkBox').checked;
         this.showUAVIDFlag = document.getElementById('uavIDChkBox').checked;
-        this.timeInterval = 0;
+        this.timeInterval = 60;
         this.hideUAVFlag = document.getElementById('uavHideChkBox').checked;
         this.hideUAVTrackFlag = document.getElementById('uavHideChkBox').checked;
         this.updateCurrtimeFlag = false;
+        this.flying = false;
         //store all the flying uav
         this.uavMap = new Map();
         //show area
         this.showStartArea();
         this.showEndArea();
         this.showBaseStation();
+        // for playback
+        this.pastTimeInterval = [];
         //uav image
         this.uavImage = {
             path: google.maps.SymbolPath.CIRCLE,
@@ -120,6 +123,12 @@ class syrMap_nocheck {
 
 
     fly() {
+        if (this.flying) {
+            return;
+        } else {
+            this.flying = true;
+        }
+
         if (this.updateCurrtimeFlag) {
             this.updateCurrtime();
         }
@@ -201,10 +210,9 @@ class syrMap_nocheck {
                         if (this.hideUAVFlag) {
                             currUAV.mapmarker.setMap(null);
                         }
-                        if (this.hideUAVTrackFlag) {
-                            for (let item in currUAV.prePath) {
-                                currUAV.prePath[item].setMap(null);
-                            }
+                        if (this.hideUAVTrackFlag
+                            && Object.getOwnPropertyNames(currUAV.uavPath).length > 0) {
+                            currUAV.uavPath.setMap(null);
                         }
                         //delete element in map
                         this.uavMap.delete(currID);
@@ -215,27 +223,41 @@ class syrMap_nocheck {
                             let lineSymbol = {
                                 path: google.maps.SymbolPath.FORWARD_OPEN_ARROW
                             };
-                            let flightPath = new google.maps.Polyline({
-                                path: [{lat: currUAV.lat, lng: currUAV.long},
-                                    {
-                                        lat: Number(this.uavData[currIndex].Latitude),
-                                        lng: Number(this.uavData[currIndex].Longitude)
+                            if (!Object.getOwnPropertyNames(currUAV.uavPath).length > 0) {
+                                // uavPath is null
+                                currUAV.uavPath = new google.maps.Polyline({
+                                    path: [
+                                        {
+                                            lat: currUAV.lat,
+                                            lng: currUAV.long
+                                        },
+                                        {
+                                            lat: Number(this.uavData[currIndex].Latitude),
+                                            lng: Number(this.uavData[currIndex].Longitude)
+                                        },
+                                    ],
+                                    icons: [{
+                                        icon: lineSymbol,
+                                        offset: '100%',
+                                        repeat: '20px',
                                     }],
-                                icons: [{
-                                    icon: lineSymbol,
-                                    offset: '100%'
-                                }],
-                                geodesic: true,
-                                strokeColor: '#42b0f4',
-                                strokeOpacity: 1.0,
-                                strokeWeight: 2
-                            });
-                            currUAV.prePath.push(flightPath);
-                            flightPath.setMap(this.googlemap);
+                                    geodesic: true,
+                                    strokeColor: '#42b0f4',
+                                    strokeOpacity: 1.0,
+                                    strokeWeight: 2
+                                });
+                                currUAV.uavPath.setMap(this.googlemap);
+                            } else {
+                                //update uav obj position
+                                let newLatLng = new google.maps.LatLng({
+                                    lat: Number(this.uavData[currIndex].Latitude),
+                                    lng: Number(this.uavData[currIndex].Longitude)
+                                });
+                                let path = currUAV.uavPath.getPath();
+                                path.push(newLatLng);
+                                currUAV.uavPath.setPath(path);
+                            }
                         }
-                        //update uav obj position
-                        currUAV.lat = Number(this.uavData[currIndex].Latitude);
-                        currUAV.long = Number(this.uavData[currIndex].Longitude);
 
                         //if normnal to out
                         if (this.uavData[currIndex].CurrentBasestation == -1 && currUAV.state == 1) {
@@ -276,15 +298,65 @@ class syrMap_nocheck {
                 }
                 currIndex += 1;
             }
-            //move uadData loading window
-            this.uavData.splice(0, endIndex);
+            //move uavData loading window
+            this.pastTimeInterval.push(this.uavData.splice(0, endIndex));
+
+            if (this.pastTimeInterval.length > 100) {
+                this.pastTimeInterval.shift();
+            }
         }, this.timeInterval);
         this.timeoutArr.push(intervalId);
     }
 
     pause() {
+        this.flying = false;
         for (let item in this.timeoutArr) {
             clearTimeout(this.timeoutArr[item]);
+        }
+    }
+
+    backtrack(backFlag) {
+        // console.log(backFlag);
+        this.pause();
+
+        let steps = backFlag;
+        let backstep = this.pastTimeInterval.splice(this.pastTimeInterval.length - steps, steps);
+
+
+        let backUAVs = new Map();
+        for (let i = backstep.length-1; i >= 0; i--) {
+            backstep[i].forEach(u => {
+                this.uavData.unshift(u);
+                if (backUAVs.has(u.ID)) {
+                    backUAVs.set(u.ID, backUAVs.get(u.ID) + 1);
+                } else if (this.uavMap.has(u.ID)) {
+                    backUAVs.set(u.ID, 1);
+                }
+            });
+        }
+
+        for (let [key, value] of backUAVs) {
+            if (this.uavMap.has(key)) {
+                let currUAV = this.uavMap.get(key);
+
+                if (!Object.getOwnPropertyNames(currUAV.uavPath).length > 0) continue;
+
+                let path = currUAV.uavPath.getPath();
+                while (value > 0) {
+                    path.pop();
+                    value--;
+                }
+                const len = path.getLength();
+                const latlng = path.getAt(len-1);
+
+                if (latlng === undefined) continue;
+
+                currUAV.mapmarker.setPosition({
+                    lat: latlng.lat(),
+                    lng: latlng.lng(),
+                });
+                this.uavMap.set(key, currUAV);
+            }
         }
     }
 
@@ -292,8 +364,16 @@ class syrMap_nocheck {
         this.fly();
     }
 
-    setTimeInterval() {
-        this.timeInterval = document.getElementById('timeinterval').value;
+    setTimeInterval(val) {
+        // this.timeInterval = document.getElementById('timeinterval').value;
+        this.timeInterval = val;
+
+        if (this.flying) {
+            this.pause();
+            this.resume();
+        } else {
+            this.pause();
+        }
     }
 
     setShowTrack() {
