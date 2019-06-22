@@ -1,5 +1,7 @@
 /*global google*/
 
+import UAV from './UAV'
+
 class syrMap_nocheck {
 
     constructor(mapID, uavdata, startArea, endArea,baseStation) {
@@ -33,7 +35,14 @@ class syrMap_nocheck {
         this.showEndArea();
         this.showBaseStation();
         //uav image
-        this.uavImage = 'images/uav.png';
+        this.uavImage = {
+            path: google.maps.SymbolPath.CIRCLE,
+            scale: 10,
+            fillColor: "#7CFC00",
+            fillOpacity: 2,
+            strokeWeight : 6
+        };
+
         this.uavImageNull = {path: google.maps.SymbolPath.CIRCLE, scale: 0};
 
         this.missingIcon = {

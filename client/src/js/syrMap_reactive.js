@@ -1,7 +1,5 @@
 /*global google*/
 
-import UAV from './UAV'
-
 class syrMap_reactive {
 
     constructor(mapID, uavdata, startArea, endArea) {
