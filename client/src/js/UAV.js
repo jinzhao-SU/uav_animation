@@ -7,9 +7,10 @@ class UAV {
         this.mapmarker=mapmarker;
         this.prePath = [];
         this.uavPath = {};
+        this.state = true;
     }
 
-    // remove the num lastest vertex in path 
+    // remove the num lastest vertex in path
     // and return the lastest uav poistion
     popPath(num) {
         if (!Object.getOwnPropertyNames(this.uavPath).length > 0) {
@@ -47,7 +48,7 @@ class UAV {
             lat: latlng.lat(),
             lng: latlng.lng(),
         });
-        
+
         uavMap.set(this.ID, this);
     }
 

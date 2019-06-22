@@ -16,6 +16,19 @@ const startArea = require('./routes/uav/startArea')
 app.use('/uav/startArea', startArea)
 const uav = require('./routes/uav/uav')
 app.use('/uav/uav', uav)
+////////////////////base_station///////////
+const baseStation = require('./routes/uav/baseStation')
+app.use('/uav/baseStation', baseStation)
+////////other uav version/////////////
+const uavReactive = require('./routes/uav/uav_reactive')
+app.use('/uav/uav', uavReactive)
+
+const uavTP = require('./routes/uav/uav_tp')
+app.use('/uav/uav', uavTP)
+
+const uavNOCheck = require('./routes/uav/uav_nocheck')
+app.use('/uav/uav', uavNOCheck)
+
 
 
 // if (process.env.NODE_ENV === 'production') {

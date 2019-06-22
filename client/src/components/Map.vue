@@ -12,11 +12,16 @@ import { constants } from 'crypto';
 const urlStartArea = 'uav/startArea/'
 const urlEndArea = 'uav/endArea/'
 const urlUAV = 'uav/uav/'
+const urlBastStation = 'uav/baseStation/'
+const urlUAV_nocheck = '/uav/uav_nocheck/'
+const urlUAV_tp = '/uav/uav_tp/'
+const urlUAV_reactive = '/uav/uav_reactive/'
+
 
 export default {
     name: 'GoogleMap',
     props: [
-        'proactive',
+        'index',
     ],
     data() {
         return {
@@ -26,20 +31,21 @@ export default {
             startData: [],
             endData: [],
             uavData: [],
+            baseStationData: [],
             mapGoogle: {},
         };
     },
     async created () {
         try {
-            console.log(`proactive: ${this.proactive}`);
+            console.log(`index: ${this.index}`);
             // get data
             this.startData = await this.getStartData();
             this.endData = await this.getEndData();
-            this.uavData = await this.getUAVData();
+            this.baseStationData = await this.getBaseStationData();
             // init map
             let regexpress = /reactive*/;
             let flag = -1;
-            let stmt = this.proactive;
+            let stmt = this.index;
             stmt ? stmt : stmt = '';
             console.log(`stmt: ${stmt}`);
             if (stmt.match(regexpress)) {
@@ -48,10 +54,13 @@ export default {
             }
             switch(stmt) {
                 case 'proactive':
-                    this.mapGoogle = new syrMap2('map',this.uavData,this.startData,this.endData);
+                    this.uavData = await this.getUAVData(urlUAV);
+                    //console.log("length",this.uavData.length)
+                    this.mapGoogle = new syrMap('map',this.uavData,this.startData,this.endData,this.baseStationData);
                     break;
                 case 'reactive':
                     if (flag === 'e') {
+                        this.uavData = await this.getUAVData(urlUAV_reactive);
                         console.log(`flag: ${flag}`);
                     } else if (flag === '1') {
                         console.log(`flag: ${flag}`);
@@ -62,14 +71,19 @@ export default {
                     }
                     this.mapGoogle = new syrMap('map',this.uavData,this.startData,this.endData);
                     break;
-                case 'redue-to-point':
-                    this.mapGoogle = new syrMap_r('map',this.uavData,this.startData,this.endData);
+                case 'reduce_turn_point':
+                    this.uavData = await this.getUAVData(urlUAV_tp);
+                    this.mapGoogle = new syrMap('map',this.uavData,this.startData,this.endData,this.baseStationData);
+                    break;
+                case 'proactive_nocheck':
+                    this.uavData = await this.getUAVData(urlUAV_nocheck);
+                    this.mapGoogle = new syrMap2('map',this.uavData,this.startData,this.endData,this.baseStationData);
                     break;
                 default:
-                    this.mapGoogle = new syrMap('map',this.uavData,this.startData,this.endData);
-                    
+                    this.mapGoogle = new syrMap2('map',this.uavData,this.startData,this.endData);
+
             }
-            
+
 
             // uav event listener
             Event.listen('startFly', ()=> this.mapGoogle.fly());
@@ -88,6 +102,24 @@ export default {
     },
 
     methods: {
+
+
+    getBaseStationData() {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const res = await axios.get(urlBastStation);
+                const data = res.data;
+                resolve(
+                    data.map(post => ({
+                        ...post,
+                    }))
+                )
+            } catch(err) {
+                reject(err);
+            }
+        })
+    },
+
 
         getStartData() {
             return new Promise(async (resolve, reject) => {
@@ -109,7 +141,7 @@ export default {
             return new Promise(async (resolve, reject) => {
                 try {
                     const res = await axios.get(urlEndArea);
-                    
+
                     const data = res.data;
                     resolve(
                         data.map(post => ({
@@ -122,11 +154,12 @@ export default {
             })
         },
 
-        getUAVData() {
+        getUAVData(uavURL) {
             return new Promise(async (resolve, reject) => {
                 try {
                     var _this = this;
-                    oboe(urlUAV).node(
+                    console.log("get data from",uavURL)
+                    oboe(uavURL).node(
                         '{TimeStep ID Latitude Longitude SignalStrength CurrentBasestation finished}',
                         async function (jsonObject) {
                         //    console.log(jsonObject);
@@ -151,7 +184,7 @@ export default {
             return new Promise(async (resolve, reject) => {
                 try {
                     var _this = this;
-                    
+
                     let x = setInterval(() => {
                         if(_this.uavData.length >= 100) {
                             clearInterval(x);

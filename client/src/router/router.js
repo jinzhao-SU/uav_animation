@@ -9,16 +9,16 @@ export default new Router({
     mode: 'history',
     routes: [
         {
-            path: '/:proactive',
+            path: '/:index',
             name: 'Map',
             props: true,
             components: {
                 main: Map,
                 sidepanel: Slide,
             },
-            props: { 
-                main: true, 
-                sidepanel: false 
+            props: {
+                main: true,
+                sidepanel: false
             },
         },
         {

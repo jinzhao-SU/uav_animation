@@ -5,7 +5,7 @@ import UAVImage from '../assets/uav.png'
 
 class syrMap {
 
-    constructor(mapID, uavdata, startArea, endArea) {
+    constructor(mapID, uavdata, startArea, endArea,baseStation) {
         this.googlemap = new google.maps.Map(document.getElementById(mapID), {
             zoom: 13,
             center: {lat: 43.0481221, lng: -76.14742439999999},
@@ -23,6 +23,8 @@ class syrMap {
         this.startArea = startArea;
         //end area json
         this.endArea = endArea;
+        //base station json
+        this.baseStation = baseStation;
         //updated time for query
         this.updatedCurrTime = 0;
         //flags
@@ -38,6 +40,7 @@ class syrMap {
         //show area
         this.showStartArea();
         this.showEndArea();
+        this.showBaseStation();
         // for playback
         this.pastTimeInterval = [];
 
@@ -50,6 +53,17 @@ class syrMap {
         };
     }
 
+    showBaseStation () {
+        for (let item in this.baseStation) {
+            let circle = new google.maps.Circle({
+                strokeWeight: 0,
+                fillColor: '#44ff44',
+                map: this.googlemap,
+                center: {lat: Number(this.baseStation[item].lat), lng:Number(this.baseStation[item].lng)},
+                radius: 2700
+            });
+        }
+    }
 
     showStartArea() {
         for (let item in this.startArea) {
@@ -130,7 +144,7 @@ class syrMap {
             document.getElementById('curUAVnum').value = this.uavMap.size;
             while (currIndex < endIndex) {
                 currID = this.uavData[currIndex].ID;
-                
+
                 // if (currID !== '1233186384') {
                 //     currIndex += 1;
                 //     continue;
@@ -196,7 +210,7 @@ class syrMap {
                                 currUAV.uavPath = new google.maps.Polyline({
                                     path: [
                                         {
-                                            lat: currUAV.lat,   
+                                            lat: currUAV.lat,
                                             lng: currUAV.long
                                         },
                                         {
@@ -222,7 +236,7 @@ class syrMap {
                                     lng: Number(this.uavData[currIndex].Longitude)
                                 });
                                 let path = currUAV.uavPath.getPath();
-                                path.push(newLatLng); 
+                                path.push(newLatLng);
                                 currUAV.uavPath.setPath(path);
                             }
                             // currUAV.prePath.push(flightPath);
@@ -255,7 +269,7 @@ class syrMap {
     }
 
     pause() {
-        this.flying = false;        
+        this.flying = false;
         for (let item in this.timeoutArr) {
             clearTimeout(this.timeoutArr[item]);
         }
@@ -264,7 +278,7 @@ class syrMap {
     backtrack(backFlag) {
         // console.log(backFlag);
         this.pause();
-        
+
         let steps = backFlag;
         let backstep = this.pastTimeInterval.splice(this.pastTimeInterval.length - steps, steps);
 
@@ -280,7 +294,7 @@ class syrMap {
                 }
             });
         }
-        
+
         for (let [key, value] of backUAVs) {
             if (this.uavMap.has(key)) {
                 let currUAV = this.uavMap.get(key);
@@ -301,7 +315,7 @@ class syrMap {
                     lat: latlng.lat(),
                     lng: latlng.lng(),
                 });
-                this.uavMap.set(key, currUAV);       
+                this.uavMap.set(key, currUAV);
             }
         }
     }
@@ -314,14 +328,14 @@ class syrMap {
     setTimeInterval(val) {
         // this.timeInterval = document.getElementById('timeinterval').value;
         this.timeInterval = val;
-        
+
         if (this.flying) {
             this.pause();
             this.resume();
         } else {
             this.pause();
         }
-        
+
     }
 
     setTimeIntervalRange() {
