@@ -101,7 +101,6 @@ export default {
     },
 
     methods: {
-
         getBaseStationData() {
             return new Promise(async (resolve, reject) => {
                 try {
