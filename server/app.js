@@ -21,13 +21,13 @@ const baseStation = require('./routes/uav/baseStation')
 app.use('/uav/baseStation', baseStation)
 ////////other uav version/////////////
 const uavReactive = require('./routes/uav/uav_reactive')
-app.use('/uav/uav', uavReactive)
+app.use('/uav/uav_reactive', uavReactive)
 
 const uavTP = require('./routes/uav/uav_tp')
-app.use('/uav/uav', uavTP)
+app.use('/uav/uav_tp', uavTP)
 
 const uavNOCheck = require('./routes/uav/uav_nocheck')
-app.use('/uav/uav', uavNOCheck)
+app.use('/uav/uav_nocheck', uavNOCheck)
 
 
 

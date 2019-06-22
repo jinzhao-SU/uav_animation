@@ -1,5 +1,7 @@
 /*global google*/
 
+import UAV from './UAV'
+
 class syrMap_reactive {
 
     constructor(mapID, uavdata, startArea, endArea) {
@@ -21,8 +23,8 @@ class syrMap_reactive {
         this.showTrackFlag = document.getElementById('uavTrackChkBox').checked;
         this.showUAVIDFlag = document.getElementById('uavIDChkBox').checked;
         this.timeInterval = 0;
-        this.hideUAVFlag = document.getElementById('uavHideChkBox').checked;;
-        this.hideUAVTrackFlag = document.getElementById('uavHideChkBox').checked;;
+        this.hideUAVFlag = document.getElementById('uavHideChkBox').checked;
+        this.hideUAVTrackFlag = document.getElementById('uavHideChkBox').checked;
         this.updateCurrtimeFlag = false;
         //store all the flying uav
         this.uavMap = new Map();

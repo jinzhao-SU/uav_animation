@@ -13,9 +13,9 @@ const urlStartArea = 'uav/startArea/'
 const urlEndArea = 'uav/endArea/'
 const urlUAV = 'uav/uav/'
 const urlBastStation = 'uav/baseStation/'
-const urlUAV_nocheck = '/uav/uav_nocheck/'
-const urlUAV_tp = '/uav/uav_tp/'
-const urlUAV_reactive = '/uav/uav_reactive/'
+const urlUAV_nocheck = 'uav/uav_nocheck/'
+const urlUAV_tp = 'uav/uav_tp/'
+const urlUAV_reactive = 'uav/uav_reactive/'
 
 
 export default {
@@ -102,23 +102,21 @@ export default {
 
     methods: {
 
-
-    getBaseStationData() {
-        return new Promise(async (resolve, reject) => {
-            try {
-                const res = await axios.get(urlBastStation);
-                const data = res.data;
-                resolve(
-                    data.map(post => ({
-                        ...post,
-                    }))
-                )
-            } catch(err) {
-                reject(err);
-            }
-        })
-    },
-
+        getBaseStationData() {
+            return new Promise(async (resolve, reject) => {
+                try {
+                    const res = await axios.get(urlBastStation);
+                    const data = res.data;
+                    resolve(
+                        data.map(post => ({
+                            ...post,
+                        }))
+                    )
+                } catch(err) {
+                    reject(err);
+                }
+            })
+        },
 
         getStartData() {
             return new Promise(async (resolve, reject) => {
@@ -161,7 +159,6 @@ export default {
                     oboe(uavURL).node(
                         '{TimeStep ID Latitude Longitude SignalStrength CurrentBasestation finished}',
                         async function (jsonObject) {
-                        //    console.log(jsonObject);
                             _this.uavData.push(jsonObject);
                         }
                     );
