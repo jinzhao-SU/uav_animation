@@ -150,7 +150,7 @@ class syrMap2 {
                         labelid = this.uavData[currIndex].ID;
                         image = {path: google.maps.SymbolPath.CIRCLE, scale: 0};
                     } else {
-                        image = UAVImage;
+                        image = this.missingIcon;
                         labelid = null;
                     }
                     // make marker
@@ -160,8 +160,7 @@ class syrMap2 {
                             lng: Number(this.uavData[currIndex].Longitude)
                         },
                         map: this.googlemap,
-                        icon: this.missingIcon,
-                        // icon: image,
+                        icon: image,
                         label: labelid
                     });
                     //new obj insert to uavMap

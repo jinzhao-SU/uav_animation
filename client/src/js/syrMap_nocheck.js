@@ -1,19 +1,11 @@
 /*global google*/
 
-import UAV from './UAV'
-import UAVImage from '../assets/uav.png'
-
-class syrMap {
+class syrMap_nocheck {
 
     constructor(mapID, uavdata, startArea, endArea,baseStation) {
         this.googlemap = new google.maps.Map(document.getElementById(mapID), {
             zoom: 13,
-            center: {lat: 43.0481221, lng: -76.14742439999999},
-            mapTypeControl: true,
-            mapTypeControlOptions: {
-                style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
-                position: google.maps.ControlPosition.RIGHT_TOP
-            },
+            center: {lat: 43.0481221, lng: -76.14742439999999}
         });
         //for animation
         this.timeoutArr = [];
@@ -30,26 +22,26 @@ class syrMap {
         //flags
         this.showTrackFlag = document.getElementById('uavTrackChkBox').checked;
         this.showUAVIDFlag = document.getElementById('uavIDChkBox').checked;
-        this.timeInterval = 60;
-        this.hideUAVFlag = document.getElementById('uavHideChkBox').checked;
-        this.hideUAVTrackFlag = document.getElementById('uavHideChkBox').checked;
+        this.timeInterval = 0;
+        this.hideUAVFlag = document.getElementById('uavHideChkBox').checked;;
+        this.hideUAVTrackFlag = document.getElementById('uavHideChkBox').checked;;
         this.updateCurrtimeFlag = false;
-        this.flying = false;
         //store all the flying uav
         this.uavMap = new Map();
         //show area
         this.showStartArea();
         this.showEndArea();
         this.showBaseStation();
-        // for playback
-        this.pastTimeInterval = [];
+        //uav image
+        this.uavImage = 'images/uav.png';
+        this.uavImageNull = {path: google.maps.SymbolPath.CIRCLE, scale: 0};
 
         this.missingIcon = {
             path: google.maps.SymbolPath.CIRCLE,
             scale: 10,
-            fillColor: "#7CFC00",
+            fillColor: "#FFFF00",
             fillOpacity: 2,
-            strokeWeight: 6,
+            strokeWeight : 6
         };
     }
 
@@ -64,7 +56,6 @@ class syrMap {
             });
         }
     }
-
     showStartArea() {
         for (let item in this.startArea) {
             let rectangle = new google.maps.Rectangle({
@@ -83,6 +74,7 @@ class syrMap {
             });
         }
     }
+
 
     showEndArea() {
         for (let item in this.endArea) {
@@ -103,6 +95,8 @@ class syrMap {
         }
     }
 
+
+
     checkTimeSeg() {
         let currTimeStep = this.uavData[0].TimeStep;
         let tempIndex = 0;
@@ -115,13 +109,8 @@ class syrMap {
         return tempIndex;
     }
 
-    fly() {
-        if (this.flying) {
-            return;
-        } else {
-            this.flying = true;
-        }
 
+    fly() {
         if (this.updateCurrtimeFlag) {
             this.updateCurrtime();
         }
@@ -133,53 +122,64 @@ class syrMap {
                 clearInterval(intervalId);
                 return;
             }
-            // console.log("length ", this.uavData.length);
-            // console.log("first ele", this.uavData[0]);
+            //console.log("length ", this.uavData.length);
+            //console.log("first ele", this.uavData[0]);
             let endIndex = this.checkTimeSeg();
             let currIndex = 0;
             let currID = 0;
             let currUAV;
+            let labelid = null;
 
             document.getElementById('curtime').value= this.uavData[currIndex].TimeStep;
             document.getElementById('curUAVnum').value = this.uavMap.size;
             while (currIndex < endIndex) {
                 currID = this.uavData[currIndex].ID;
-
-                // if (currID !== '1233186384') {
-                //     currIndex += 1;
-                //     continue;
-                // } else {
-                //     // console.log(currID);
-                // }
-
                 //console.log("curr Index ", currIndex);
                 //console.log("curr uav ID", currID);
                 //new UAV
                 if (!this.uavMap.has(currID)) {
                     //new icon
-                    let labelid = null;
+
                     let image;
                     //if show uav id
                     if (this.showUAVIDFlag) {
                         labelid = this.uavData[currIndex].ID;
-                        image = {path: google.maps.SymbolPath.CIRCLE, scale: 0};
+                        image =  this.uavImageNull;
                     } else {
-                        image = UAVImage;
+                        image = this.uavImage;
                         labelid = null;
                     }
                     // make marker
-                    let marker = new google.maps.Marker({
-                        position: {
-                            lat: Number(this.uavData[currIndex].Latitude),
-                            lng: Number(this.uavData[currIndex].Longitude)
-                        },
-                        map: this.googlemap,
-                        icon: this.missingIcon,
-                        // icon: image,
-                        label: labelid
-                    });
+                    let marker;
+                    let newUAV;
+                    if (this.uavData[currIndex].CurrentBasestation > -1) {
+                        //has connection
+                        marker = new google.maps.Marker({
+                            position: {
+                                lat: Number(this.uavData[currIndex].Latitude),
+                                lng: Number(this.uavData[currIndex].Longitude)
+                            },
+                            map: this.googlemap,
+                            icon: image,
+                            label: labelid
+                        });
+                        newUAV = new UAV(this.uavData[currIndex], marker);
+                        newUAV.state = true;
+                    } else {
+                        //no connection
+                        marker = new google.maps.Marker({
+                            position: {
+                                lat: Number(this.uavData[currIndex].Latitude),
+                                lng: Number(this.uavData[currIndex].Longitude)
+                            },
+                            map: this.googlemap,
+                            icon: this.missingIcon,
+                            label: labelid
+                        });
+                        newUAV = new UAV(this.uavData[currIndex], marker);
+                        newUAV.state = false;
+                    }
                     //new obj insert to uavMap
-                    let newUAV = new UAV(this.uavData[currIndex], marker);
                     this.uavMap.set(currID, newUAV);
                     //console.log("new UAV ID ", currID);
                 } else {
@@ -192,9 +192,10 @@ class syrMap {
                         if (this.hideUAVFlag) {
                             currUAV.mapmarker.setMap(null);
                         }
-                        if (this.hideUAVTrackFlag
-                            && Object.getOwnPropertyNames(currUAV.uavPath).length > 0) {
-                            currUAV.uavPath.setMap(null);
+                        if (this.hideUAVTrackFlag) {
+                            for (let item in currUAV.prePath) {
+                                currUAV.prePath[item].setMap(null);
+                            }
                         }
                         //delete element in map
                         this.uavMap.delete(currID);
@@ -205,141 +206,85 @@ class syrMap {
                             let lineSymbol = {
                                 path: google.maps.SymbolPath.FORWARD_OPEN_ARROW
                             };
-                            if (!Object.getOwnPropertyNames(currUAV.uavPath).length > 0) {
-                                // uavPath is null
-                                currUAV.uavPath = new google.maps.Polyline({
-                                    path: [
-                                        {
-                                            lat: currUAV.lat,
-                                            lng: currUAV.long
-                                        },
-                                        {
-                                            lat: Number(this.uavData[currIndex].Latitude),
-                                            lng: Number(this.uavData[currIndex].Longitude)
-                                        },
-                                    ],
-                                    icons: [{
-                                        icon: lineSymbol,
-                                        offset: '100%',
-                                        repeat: '20px',
+                            let flightPath = new google.maps.Polyline({
+                                path: [{lat: currUAV.lat, lng: currUAV.long},
+                                    {
+                                        lat: Number(this.uavData[currIndex].Latitude),
+                                        lng: Number(this.uavData[currIndex].Longitude)
                                     }],
-                                    geodesic: true,
-                                    strokeColor: '#42b0f4',
-                                    strokeOpacity: 1.0,
-                                    strokeWeight: 2
-                                });
-                                currUAV.uavPath.setMap(this.googlemap);
-                            } else {
-                                // update path
-                                let newLatLng = new google.maps.LatLng({
-                                    lat: Number(this.uavData[currIndex].Latitude),
-                                    lng: Number(this.uavData[currIndex].Longitude)
-                                });
-                                let path = currUAV.uavPath.getPath();
-                                path.push(newLatLng);
-                                currUAV.uavPath.setPath(path);
-                            }
-                            // currUAV.prePath.push(flightPath);
-                            // flightPath.setMap(this.googlemap);
+                                icons: [{
+                                    icon: lineSymbol,
+                                    offset: '100%'
+                                }],
+                                geodesic: true,
+                                strokeColor: '#42b0f4',
+                                strokeOpacity: 1.0,
+                                strokeWeight: 2
+                            });
+                            currUAV.prePath.push(flightPath);
+                            flightPath.setMap(this.googlemap);
+                        }
+                        //update uav obj position
+                        currUAV.lat = Number(this.uavData[currIndex].Latitude);
+                        currUAV.long = Number(this.uavData[currIndex].Longitude);
+
+                        //if normnal to out
+                        if (this.uavData[currIndex].CurrentBasestation == -1 && currUAV.state == 1) {
+                            currUAV.state = false;
+                            currUAV.mapmarker.setMap(null);
+                            currUAV.mapmarker = new google.maps.Marker({
+                                position: {
+                                    lat: currUAV.lat,
+                                    lng: currUAV.long
+                                },
+                                map: this.googlemap,
+                                icon : this.missingIcon,
+                            });
+                            //console.log("change to confict");
+                        }
+                        //if out to normal
+                        else if(this.uavData[currIndex].CurrentBasestation != -1 && currUAV.state == false){
+                            currUAV.state = true;
+                            currUAV.mapmarker.setMap(null);
+                            currUAV.mapmarker = new google.maps.Marker({
+                                position: {
+                                    lat: currUAV.lat,
+                                    lng: currUAV.long
+                                },
+                                map: this.googlemap,
+                                icon: this.uavImage,
+
+                            });
+                            //console.log("change to normal");
                         }
                         currUAV.mapmarker.setPosition({
                             lat: Number(this.uavData[currIndex].Latitude),
                             lng: Number(this.uavData[currIndex].Longitude)
                         });
-                        //update uav
-                        currUAV.lat = Number(this.uavData[currIndex].Latitude);
-                        currUAV.long = Number(this.uavData[currIndex].Longitude);
+                        //update uav hashmap
                         this.uavMap.set(currID, currUAV);
                     }
                 }
                 currIndex += 1;
             }
-            //move uavData loading window
-            this.pastTimeInterval.push(this.uavData.splice(0, endIndex));
-
-            if (this.pastTimeInterval.length > 100) {
-            // if (this.pastTimeInterval.length > 20) {
-                this.pastTimeInterval.shift();
-            }
-            // this.uavData.splice(0, endIndex);
-
+            //move uadData loading window
+            this.uavData.splice(0, endIndex);
         }, this.timeInterval);
         this.timeoutArr.push(intervalId);
-
     }
 
     pause() {
-        this.flying = false;
         for (let item in this.timeoutArr) {
             clearTimeout(this.timeoutArr[item]);
         }
     }
 
-    backtrack(backFlag) {
-        // console.log(backFlag);
-        this.pause();
-
-        let steps = backFlag;
-        let backstep = this.pastTimeInterval.splice(this.pastTimeInterval.length - steps, steps);
-
-
-        let backUAVs = new Map();
-        for (let i = backstep.length-1; i >= 0; i--) {
-            backstep[i].forEach(u => {
-                this.uavData.unshift(u);
-                if (backUAVs.has(u.ID)) {
-                    backUAVs.set(u.ID, backUAVs.get(u.ID) + 1);
-                } else if (this.uavMap.has(u.ID)) {
-                    backUAVs.set(u.ID, 1);
-                }
-            });
-        }
-
-        for (let [key, value] of backUAVs) {
-            if (this.uavMap.has(key)) {
-                let currUAV = this.uavMap.get(key);
-
-                if (!Object.getOwnPropertyNames(currUAV.uavPath).length > 0) continue;
-
-                let path = currUAV.uavPath.getPath();
-                while (value > 0) {
-                    path.pop();
-                    value--;
-                }
-                const len = path.getLength();
-                const latlng = path.getAt(len-1);
-
-                if (latlng === undefined) continue;
-
-                currUAV.mapmarker.setPosition({
-                    lat: latlng.lat(),
-                    lng: latlng.lng(),
-                });
-                this.uavMap.set(key, currUAV);
-            }
-        }
-    }
-
     resume() {
         this.fly();
-        console.log(this.timeInterval);
     }
 
-    setTimeInterval(val) {
-        // this.timeInterval = document.getElementById('timeinterval').value;
-        this.timeInterval = val;
-
-        if (this.flying) {
-            this.pause();
-            this.resume();
-        } else {
-            this.pause();
-        }
-
-    }
-
-    setTimeIntervalRange() {
-        this.timeInterval = document.getElementById('timeintervalrange').value;
+    setTimeInterval() {
+        this.timeInterval = document.getElementById('timeinterval').value;
     }
 
     setShowTrack() {
@@ -354,7 +299,7 @@ class syrMap {
         this.hideUAVFlag = document.getElementById('uavHideChkBox').checked;
         this.hideUAVTrackFlag = document.getElementById('uavHideChkBox').checked;
     }
-    getCurrTime() {
+    getCurrTime(currtime) {
         this.updateCurrtimeFlag = true;
         this.updatedCurrTime = Number(document.getElementById('setCurtime').value);
     }
@@ -390,5 +335,4 @@ class syrMap {
 
 }
 
-
-export default syrMap;
+export default syrMap_nocheck;

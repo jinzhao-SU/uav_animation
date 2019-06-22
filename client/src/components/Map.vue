@@ -7,8 +7,8 @@ import oboe from 'oboe'
 import axios from 'axios';
 import syrMap from '../js/syrMap'
 import syrMap2 from '../js/syrMap2'
-import syrMap_r from '../js/syrMap_r'
-import { constants } from 'crypto';
+import syrMap_nocheck from '../js/syrMap_nocheck'
+import syrMap_reactive from '../js/syrMap_reactive';
 const urlStartArea = 'uav/startArea/'
 const urlEndArea = 'uav/endArea/'
 const urlUAV = 'uav/uav/'
@@ -69,7 +69,7 @@ export default {
                     } else {
                         console.log(`flag: ${flag}`);
                     }
-                    this.mapGoogle = new syrMap('map',this.uavData,this.startData,this.endData);
+                    this.mapGoogle = new syrMap_reactive('map',this.uavData,this.startData,this.endData);
                     break;
                 case 'reduce_turn_point':
                     this.uavData = await this.getUAVData(urlUAV_tp);
@@ -77,11 +77,10 @@ export default {
                     break;
                 case 'proactive_nocheck':
                     this.uavData = await this.getUAVData(urlUAV_nocheck);
-                    this.mapGoogle = new syrMap2('map',this.uavData,this.startData,this.endData,this.baseStationData);
+                    this.mapGoogle = new syrMap_nocheck('map',this.uavData,this.startData,this.endData,this.baseStationData);
                     break;
                 default:
                     this.mapGoogle = new syrMap2('map',this.uavData,this.startData,this.endData);
-
             }
 
 
