@@ -25,8 +25,8 @@ class syrMap_nocheck {
         this.showTrackFlag = document.getElementById('uavTrackChkBox').checked;
         this.showUAVIDFlag = document.getElementById('uavIDChkBox').checked;
         this.timeInterval = 0;
-        this.hideUAVFlag = document.getElementById('uavHideChkBox').checked;;
-        this.hideUAVTrackFlag = document.getElementById('uavHideChkBox').checked;;
+        this.hideUAVFlag = document.getElementById('uavHideChkBox').checked;
+        this.hideUAVTrackFlag = document.getElementById('uavHideChkBox').checked;
         this.updateCurrtimeFlag = false;
         //store all the flying uav
         this.uavMap = new Map();
