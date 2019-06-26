@@ -1,4 +1,4 @@
-TimeStep,ID,Latitude,Longitude,SignalStrength,CurrentBasestation,Finished
+Time_Step,UAV_ID,Latitude,Longitude,Signal_strength,Current_Basestation,Finished
 10,1233186384,43.0827885,-76.1771582,134.4682058,7,1
 10,432814178,43.0274945,-76.0402463,999,-1,1
 20,1233186384,43.0827885,-76.1749477,134.1761084,7,1
