@@ -110,10 +110,10 @@ class syrMap_nocheck {
 
 
     checkTimeSeg() {
-        let currTimeStep = this.uavData[0].TimeStep;
+        let currTimeStep = this.uavData[0].Time_Step;
         let tempIndex = 0;
         while (tempIndex < this.uavData.length) {
-            if (this.uavData[tempIndex].TimeStep !== currTimeStep) {
+            if (this.uavData[tempIndex].Time_Step !== currTimeStep) {
                 break;
             }
             tempIndex += 1;
@@ -148,12 +148,12 @@ class syrMap_nocheck {
             let currUAV;
             let labelid = null;
 
-            document.getElementById('curtime').value= this.uavData[currIndex].TimeStep;
+            document.getElementById('curtime').value= this.uavData[currIndex].Time_Step;
             document.getElementById('curUAVnum').value = this.uavMap.size;
             while (currIndex < endIndex) {
-                currID = this.uavData[currIndex].ID;
+                currID = this.uavData[currIndex].UAV_ID;
                 //console.log("curr Index ", currIndex);
-                //console.log("curr uav ID", currID);
+                //console.log("curr uav UAV_ID", currID);
                 //new UAV
                 if (!this.uavMap.has(currID)) {
                     //new icon
@@ -161,7 +161,7 @@ class syrMap_nocheck {
                     let image;
                     //if show uav id
                     if (this.showUAVIDFlag) {
-                        labelid = this.uavData[currIndex].ID;
+                        labelid = this.uavData[currIndex].UAV_ID;
                         image =  this.uavImageNull;
                     } else {
                         image = this.uavImage;
@@ -170,7 +170,7 @@ class syrMap_nocheck {
                     // make marker
                     let marker;
                     let newUAV;
-                    if (this.uavData[currIndex].CurrentBasestation > -1) {
+                    if (this.uavData[currIndex].Current_Basestation > -1) {
                         //has connection
                         marker = new google.maps.Marker({
                             position: {
@@ -199,13 +199,13 @@ class syrMap_nocheck {
                     }
                     //new obj insert to uavMap
                     this.uavMap.set(currID, newUAV);
-                    //console.log("new UAV ID ", currID);
+                    //console.log("new UAV UAV_ID ", currID);
                 } else {
                     // uav exists
                     currUAV = this.uavMap.get(currID);
                     //console.log("exist uav",currUAV);
                     //uav lands
-                    if (this.uavData[currIndex].finished === '-1') {
+                    if (this.uavData[currIndex].Finished === '-1') {
                         //remove icon
                         if (this.hideUAVFlag) {
                             currUAV.mapmarker.setMap(null);
@@ -260,7 +260,7 @@ class syrMap_nocheck {
                         }
 
                         //if normnal to out
-                        if (this.uavData[currIndex].CurrentBasestation == -1 && currUAV.state == 1) {
+                        if (this.uavData[currIndex].Current_Basestation == -1 && currUAV.state == 1) {
                             currUAV.state = false;
                             currUAV.mapmarker.setMap(null);
                             currUAV.mapmarker = new google.maps.Marker({
@@ -274,7 +274,7 @@ class syrMap_nocheck {
                             //console.log("change to confict");
                         }
                         //if out to normal
-                        else if(this.uavData[currIndex].CurrentBasestation != -1 && currUAV.state == false){
+                        else if(this.uavData[currIndex].Current_Basestation != -1 && currUAV.state == false){
                             currUAV.state = true;
                             currUAV.mapmarker.setMap(null);
                             currUAV.mapmarker = new google.maps.Marker({
@@ -327,10 +327,10 @@ class syrMap_nocheck {
         for (let i = backstep.length-1; i >= 0; i--) {
             backstep[i].forEach(u => {
                 this.uavData.unshift(u);
-                if (backUAVs.has(u.ID)) {
-                    backUAVs.set(u.ID, backUAVs.get(u.ID) + 1);
-                } else if (this.uavMap.has(u.ID)) {
-                    backUAVs.set(u.ID, 1);
+                if (backUAVs.has(u.UAV_ID)) {
+                    backUAVs.set(u.UAV_ID, backUAVs.get(u.UAV_ID) + 1);
+                } else if (this.uavMap.has(u.UAV_ID)) {
+                    backUAVs.set(u.UAV_ID, 1);
                 }
             });
         }
@@ -395,7 +395,7 @@ class syrMap_nocheck {
 
     updateCurrtime() {
         let endIndex = this.uavData.length;
-        if (Number(this.uavData[endIndex-1].TimeStep) < this.updatedCurrTime) {
+        if (Number(this.uavData[endIndex-1].Time_Step) < this.updatedCurrTime) {
             alert("input time doesn't exist in data");
         }
         let startIndex = 0;
@@ -405,17 +405,17 @@ class syrMap_nocheck {
         //binary search
         while (startIndex + 1 < endIndex) {
             midIndex =parseInt( startIndex + (endIndex - startIndex) / 2);
-            midTimeStep = Number(this.uavData[midIndex].TimeStep);
+            midTimeStep = Number(this.uavData[midIndex].Time_Step);
             if (midTimeStep < this.updatedCurrTime) {
                 startIndex = midIndex;
             } else {
                 endIndex = midIndex;
             }
         }
-        if (Number(this.uavData[startIndex].TimeStep) === this.updatedCurrTime) {
+        if (Number(this.uavData[startIndex].Time_Step) === this.updatedCurrTime) {
             resultIndex = startIndex;
         }
-        if (Number(this.uavData[endIndex].TimeStep) === this.updatedCurrTime) {
+        if (Number(this.uavData[endIndex].Time_Step) === this.updatedCurrTime) {
             resultIndex = endIndex;
         }
         //move to that timestep

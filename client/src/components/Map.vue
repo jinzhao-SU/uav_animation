@@ -156,7 +156,8 @@ export default {
                     var _this = this;
                     console.log("get data from",uavURL)
                     oboe(uavURL).node(
-                        '{TimeStep ID Latitude Longitude SignalStrength CurrentBasestation Finished}',
+                        // '{TimeStep ID Latitude Longitude SignalStrength CurrentBasestation Finished}',
+                        '{Time_Step UAV_ID Latitude Longitude Signal_strength Current_Basestation Finished}',
                         async function (jsonObject) {
                             _this.uavData.push(jsonObject);
                         }

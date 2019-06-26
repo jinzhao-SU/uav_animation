@@ -1,7 +1,7 @@
 class UAV {
 
     constructor(data,mapmarker) {
-        this.ID = data.ID;
+        this.UAV_ID = data.UAV_ID;
         this.lat=Number(data.Latitude);
         this.long=Number(data.Longitude);
         this.mapmarker=mapmarker;
@@ -49,7 +49,7 @@ class UAV {
             lng: latlng.lng(),
         });
 
-        uavMap.set(this.ID, this);
+        uavMap.set(this.UAV_ID, this);
     }
 
     // uav back num step

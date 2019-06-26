@@ -90,10 +90,10 @@ class syrMap2 {
     }
 
     checkTimeSeg() {
-        let currTimeStep = this.uavData[0].TimeStep;
+        let currTimeStep = this.uavData[0].Time_Step;
         let tempIndex = 0;
         while (tempIndex < this.uavData.length) {
-            if (this.uavData[tempIndex].TimeStep !== currTimeStep) {
+            if (this.uavData[tempIndex].Time_Step !== currTimeStep) {
                 break;
             }
             tempIndex += 1;
@@ -126,10 +126,10 @@ class syrMap2 {
             let currID = 0;
             let currUAV;
 
-            document.getElementById('curtime').value= this.uavData[currIndex].TimeStep;
+            document.getElementById('curtime').value= this.uavData[currIndex].Time_Step;
             document.getElementById('curUAVnum').value = this.uavMap.size;
             while (currIndex < endIndex) {
-                currID = this.uavData[currIndex].ID;
+                currID = this.uavData[currIndex].UAV_ID;
                 
                 // if (currID !== '1233186384') {
                 //     currIndex += 1;
@@ -139,7 +139,7 @@ class syrMap2 {
                 // }
 
                 //console.log("curr Index ", currIndex);
-                //console.log("curr uav ID", currID);
+                //console.log("curr uav UAV_ID", currID);
                 //new UAV
                 if (!this.uavMap.has(currID)) {
                     //new icon
@@ -147,7 +147,7 @@ class syrMap2 {
                     let image;
                     //if show uav id
                     if (this.showUAVIDFlag) {
-                        labelid = this.uavData[currIndex].ID;
+                        labelid = this.uavData[currIndex].UAV_ID;
                         image = {path: google.maps.SymbolPath.CIRCLE, scale: 0};
                     } else {
                         image = this.missingIcon;
@@ -166,13 +166,13 @@ class syrMap2 {
                     //new obj insert to uavMap
                     let newUAV = new UAV(this.uavData[currIndex], marker);
                     this.uavMap.set(currID, newUAV);
-                    //console.log("new UAV ID ", currID);
+                    //console.log("new UAV UAV_ID ", currID);
                 } else {
                     // uav exists
                     currUAV = this.uavMap.get(currID);
                     //console.log("exist uav",currUAV);
                     //uav lands
-                    if (this.uavData[currIndex].finished === '-1') {
+                    if (this.uavData[currIndex].Finished === '-1') {
                         //remove icon
                         if (this.hideUAVFlag) {
                             currUAV.mapmarker.setMap(null);
@@ -272,10 +272,10 @@ class syrMap2 {
         for (let i = backstep.length-1; i >= 0; i--) {
             backstep[i].forEach(u => {
                 this.uavData.unshift(u);
-                if (backUAVs.has(u.ID)) {
-                    backUAVs.set(u.ID, backUAVs.get(u.ID) + 1);
-                } else if (this.uavMap.has(u.ID)) {
-                    backUAVs.set(u.ID, 1);
+                if (backUAVs.has(u.UAV_ID)) {
+                    backUAVs.set(u.UAV_ID, backUAVs.get(u.UAV_ID) + 1);
+                } else if (this.uavMap.has(u.UAV_ID)) {
+                    backUAVs.set(u.UAV_ID, 1);
                 }
             });
         }
@@ -346,7 +346,7 @@ class syrMap2 {
 
     updateCurrtime() {
         let endIndex = this.uavData.length;
-        if (Number(this.uavData[endIndex-1].TimeStep) < this.updatedCurrTime) {
+        if (Number(this.uavData[endIndex-1].Time_Step) < this.updatedCurrTime) {
             alert("input time doesn't exist in data");
         }
         let startIndex = 0;
@@ -356,17 +356,17 @@ class syrMap2 {
         //binary search
         while (startIndex + 1 < endIndex) {
             midIndex =parseInt( startIndex + (endIndex - startIndex) / 2);
-            midTimeStep = Number(this.uavData[midIndex].TimeStep);
+            midTimeStep = Number(this.uavData[midIndex].Time_Step);
             if (midTimeStep < this.updatedCurrTime) {
                 startIndex = midIndex;
             } else {
                 endIndex = midIndex;
             }
         }
-        if (Number(this.uavData[startIndex].TimeStep) === this.updatedCurrTime) {
+        if (Number(this.uavData[startIndex].Time_Step) === this.updatedCurrTime) {
             resultIndex = startIndex;
         }
-        if (Number(this.uavData[endIndex].TimeStep) === this.updatedCurrTime) {
+        if (Number(this.uavData[endIndex].Time_Step) === this.updatedCurrTime) {
             resultIndex = endIndex;
         }
         //move to that timestep

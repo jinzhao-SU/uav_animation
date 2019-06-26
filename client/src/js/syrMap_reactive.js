@@ -43,6 +43,13 @@ class syrMap_reactive {
             strokeWeight: 6,
         };
         // this.uavImage = '/images/uav.png';
+        this.uavImage = {
+            path: google.maps.SymbolPath.CIRCLE,
+            scale: 10,
+            fillColor: "#7CFC00",
+            fillOpacity: 2,
+            strokeWeight : 6
+        };
         this.uavImageNull = {path: google.maps.SymbolPath.CIRCLE, scale: 0};
     }
 
@@ -89,10 +96,10 @@ class syrMap_reactive {
 
 
     checkTimeSeg() {
-        let currTimeStep = this.uavData[0].TimeStep;
+        let currTimeStep = this.uavData[0].Time_Step;
         let tempIndex = 0;
         while (tempIndex < this.uavData.length) {
-            if (this.uavData[tempIndex].TimeStep !== currTimeStep) {
+            if (this.uavData[tempIndex].Time_Step !== currTimeStep) {
                 break;
             }
             tempIndex += 1;
@@ -127,12 +134,12 @@ class syrMap_reactive {
             let currUAV;
             let labelid = null;
 
-            document.getElementById('curtime').value= this.uavData[currIndex].TimeStep;
+            document.getElementById('curtime').value= this.uavData[currIndex].Time_Step;
             document.getElementById('curUAVnum').value = this.uavMap.size;
             while (currIndex < endIndex) {
-                currID = this.uavData[currIndex].ID;
+                currID = this.uavData[currIndex].UAV_ID;
                 //console.log("curr Index ", currIndex);
-                //console.log("curr uav ID", currID);
+                //console.log("curr uav UAV_ID", currID);
                 //new UAV
                 if (!this.uavMap.has(currID)) {
                     //new icon
@@ -140,7 +147,7 @@ class syrMap_reactive {
                     let image;
                     //if show uav id
                     if (this.showUAVIDFlag) {
-                        labelid = this.uavData[currIndex].ID;
+                        labelid = this.uavData[currIndex].UAV_ID;
                         image =  this.uavImageNull;
                     } else {
                         image = this.missingIcon;
@@ -149,7 +156,7 @@ class syrMap_reactive {
                     // make marker
                     let marker;
                     let newUAV;
-                    if (this.uavData[currIndex].finished < 2) {
+                    if (this.uavData[currIndex].Finished < 2) {
                         //no conflict
                         marker = new google.maps.Marker({
                             position: {
@@ -178,13 +185,13 @@ class syrMap_reactive {
                     //new obj insert to uavMap
                     newUAV = new UAV(this.uavData[currIndex], marker);
                     this.uavMap.set(currID, newUAV);
-                    //console.log("new UAV ID ", currID);
+                    //console.log("new UAV UAV_ID ", currID);
                 } else {
                     // uav exists
                     currUAV = this.uavMap.get(currID);
                     //console.log("exist uav",currUAV);
                     //uav lands
-                    if (this.uavData[currIndex].finished === '-1') {
+                    if (this.uavData[currIndex].Finished === '-1') {
                         //remove icon
                         if (this.hideUAVFlag) {
                             currUAV.mapmarker.setMap(null);
@@ -244,7 +251,7 @@ class syrMap_reactive {
                         currUAV.long = Number(this.uavData[currIndex].Longitude);
 
                         //if normnal to conflict
-                        if (this.uavData[currIndex].finished == 2 && currUAV.state == true) {
+                        if (this.uavData[currIndex].Finished == 2 && currUAV.state == true) {
                             currUAV.state = false;
                             currUAV.mapmarker.setMap(null);
                             currUAV.mapmarker = new google.maps.Marker({
@@ -257,7 +264,7 @@ class syrMap_reactive {
                             //console.log("change to confict");
                         }
                         //if confict to normal
-                        else if(this.uavData[currIndex].finished == 1 && currUAV.state == false){
+                        else if(this.uavData[currIndex].Finished == 1 && currUAV.state == false){
                             currUAV.state = true;
                             currUAV.mapmarker.setMap(null);
                             currUAV.mapmarker = new google.maps.Marker({
@@ -266,7 +273,7 @@ class syrMap_reactive {
                                     lng: currUAV.long
                                 },
                                 map: this.googlemap,
-                                icon: this.missingIcon,
+                                icon: this.uavImage,
 
                             });
                             //console.log("change to normal");
@@ -310,10 +317,10 @@ class syrMap_reactive {
         for (let i = backstep.length-1; i >= 0; i--) {
             backstep[i].forEach(u => {
                 this.uavData.unshift(u);
-                if (backUAVs.has(u.ID)) {
-                    backUAVs.set(u.ID, backUAVs.get(u.ID) + 1);
-                } else if (this.uavMap.has(u.ID)) {
-                    backUAVs.set(u.ID, 1);
+                if (backUAVs.has(u.UAV_ID)) {
+                    backUAVs.set(u.UAV_ID, backUAVs.get(u.UAV_ID) + 1);
+                } else if (this.uavMap.has(u.UAV_ID)) {
+                    backUAVs.set(u.UAV_ID, 1);
                 }
             });
         }
@@ -379,7 +386,7 @@ class syrMap_reactive {
 
     updateCurrtime() {
         let endIndex = this.uavData.length;
-        if (Number(this.uavData[endIndex-1].TimeStep) < this.updatedCurrTime) {
+        if (Number(this.uavData[endIndex-1].Time_Step) < this.updatedCurrTime) {
             alert("input time doesn't exist in data");
         }
         let startIndex = 0;
@@ -389,17 +396,17 @@ class syrMap_reactive {
         //binary search
         while (startIndex + 1 < endIndex) {
             midIndex =parseInt( startIndex + (endIndex - startIndex) / 2);
-            midTimeStep = Number(this.uavData[midIndex].TimeStep);
+            midTimeStep = Number(this.uavData[midIndex].Time_Step);
             if (midTimeStep < this.updatedCurrTime) {
                 startIndex = midIndex;
             } else {
                 endIndex = midIndex;
             }
         }
-        if (Number(this.uavData[startIndex].TimeStep) === this.updatedCurrTime) {
+        if (Number(this.uavData[startIndex].Time_Step) === this.updatedCurrTime) {
             resultIndex = startIndex;
         }
-        if (Number(this.uavData[endIndex].TimeStep) === this.updatedCurrTime) {
+        if (Number(this.uavData[endIndex].Time_Step) === this.updatedCurrTime) {
             resultIndex = endIndex;
         }
         //move to that timestep
