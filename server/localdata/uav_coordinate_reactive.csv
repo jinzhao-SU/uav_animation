@@ -1,4 +1,4 @@
-TimeStep,ID,Latitude,Longitude,SignalStrength,CurrentBasestation,finished,Trajectory
+TimeStep,ID,Latitude,Longitude,SignalStrength,CurrentBasestation,Finished,Trajectory
 1,1737904745,43.0789789,-76.1752739,130.4645308,7,1,-1
 1,1458493498,43.0368617,-76.1339751,128.5925007,1,1,-1
 2,1737904745,43.0788322,-76.1751801,130.2737938,7,1,-1
